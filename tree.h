@@ -15,30 +15,30 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct nodoB 
+typedef struct nodoB 
 {
     struct nodoB *pai;
     int chave;
     struct nodoB *L;
     struct nodoB *R;
-};
-struct nodoA
+}nodoB;
+typedef struct nodoA
 {
     struct nodoA *pai;
     struct nodoB *key;
     struct nodoA *L;
     struct nodoA *R;
-};
+}nodoA;
 
-struct Arvore_A
+typedef struct Arvore_A
 {
     struct nodoA *raiz;
-};
+}Arvore_A;
 
-struct Arvore_B
+typedef struct Arvore_B
 {
     struct nodoB *raiz;
-};
+}Arvore_B;
 
 
 
