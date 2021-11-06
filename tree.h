@@ -17,7 +17,6 @@
 
 typedef struct nodoB 
 {
-    struct nodoB *pai;
     int chave;
     struct nodoB *L;
     struct nodoB *R;
