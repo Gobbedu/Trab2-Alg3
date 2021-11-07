@@ -15,39 +15,56 @@
 #include <stdlib.h>
 #include <string.h>
 
-typedef struct nodoB 
+/* tamanho maximo de uma string no input */
+#define MAX_SZ 200
+
+typedef struct t_nodoB 
 {
     int chave;
+    struct nodoB *pai;
     struct nodoB *L;
     struct nodoB *R;
-}nodoB;
+}t_nodoB;
 
-typedef struct nodoA
+typedef struct t_nodoA
 {
     struct nodoA *pai;
     struct nodoB *key;
     struct nodoA *L;
     struct nodoA *R;
-}nodoA;
+}t_nodoA;
 
 typedef struct Arvore_A
 {
-    struct nodoA *raiz;
+    struct t_nodoA *raiz;
 }Arvore_A;
 
 typedef struct Arvore_B
 {
-    struct nodoB *raiz;
+    struct t_nodoB *raiz;
 }Arvore_B;
 
 /* ARVORE A */
+char read_oper(char* c);
+void opera(t_nodoA* treeA, char oper, char* c);
+void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
+void search_tree(t_nodoA* treeA, int index);
+void remove_tree(t_nodoA* treeA, int index);
 
+void A_init(t_nodoA* treeA);
+t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB);
 
 
 /* ARVORE B */
 
 
 /* UTILS */
+int index_strB(char* c);
+int index_nodoB(t_nodoB* nodoB);
+
+int my_atoi(char* c, int i, int *diff);
+
+int stop(char* c);
 void kill(char *msg, int sig);
 
 #endif
