@@ -21,6 +21,7 @@ typedef struct nodoB
     struct nodoB *L;
     struct nodoB *R;
 }nodoB;
+
 typedef struct nodoA
 {
     struct nodoA *pai;
@@ -39,6 +40,14 @@ typedef struct Arvore_B
     struct nodoB *raiz;
 }Arvore_B;
 
+/* ARVORE A */
 
+
+
+/* ARVORE B */
+
+
+/* UTILS */
+void kill(char *msg, int sig);
 
 #endif
