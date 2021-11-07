@@ -21,17 +21,17 @@
 typedef struct t_nodoB 
 {
     int chave;
-    struct nodoB *pai;
-    struct nodoB *L;
-    struct nodoB *R;
+    struct t_nodoB *pai;
+    struct t_nodoB *L;
+    struct t_nodoB *R;
 }t_nodoB;
 
 typedef struct t_nodoA
 {
-    struct nodoA *pai;
-    struct nodoB *key;
-    struct nodoA *L;
-    struct nodoA *R;
+    struct t_nodoA *pai;
+    struct t_nodoB *key;
+    struct t_nodoA *L;
+    struct t_nodoA *R;
 }t_nodoA;
 
 typedef struct Arvore_A
@@ -56,7 +56,7 @@ t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB);
 
 
 /* ARVORE B */
-
+t_nodoB* cria_arvoreB(char* c);
 
 /* UTILS */
 int index_strB(char* c);

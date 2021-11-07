@@ -155,7 +155,7 @@ t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB)
 }
 
 /* ==================== ARVORE --B-- ==================== */
-t_nodoB* cria_arvoreB()
+t_nodoB* cria_arvoreB(char* c)
 {
     return 0;
 }
@@ -179,11 +179,13 @@ t_nodoB* cria_nodoB(int chave)
 int index_nodoB(t_nodoB* nodoB/*, char* c  */)
 {
     /* TODO */
+    return 0;
 }
 /* calcula index arvore B com string? */
 int index_strB(char* c)
 {
     /* TODO */
+    return 0;
 }
 
 int stop(char* c)
