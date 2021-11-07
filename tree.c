@@ -134,14 +134,35 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
     }
 }
 
-void search_tree(t_nodoA* treeA, int index)
+t_nodoB* search_tree(t_nodoA* treeA, int index)
 {
     /* TODO */
+    
+    /* Base: nodo vazio ou chave presente */
+    if (treeA == NULL || treeA->key == index)
+       return treeA;
+    
+    /* chave maior que nodo, procura na direita */
+    if (treeA->key < index)
+       return search(treeA->R, index);
+ 
+    /* chave menor que nodo, procura da esquerda */
+    return search(treeA->L, index);
 }
 
 void remove_tree(t_nodoA* treeA, int index)
 {   
-    /* TODO */
+    /* geeks for geeks tem explicacao massa */
+    /* https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/?ref=lbp */
+    t_nodoB* aux;
+    aux = search_tree(treeA, index);
+    if( aux == NULL )
+        fprintf(stderr, "arvore %i nao encontrada\n", index);
+    /*
+    else 
+        deleta arvoreB 'aux' 
+    */
+
 }
 
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB)

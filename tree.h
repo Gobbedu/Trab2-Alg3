@@ -48,7 +48,7 @@ typedef struct Arvore_B
 char read_oper(char* c);
 void opera(t_nodoA* treeA, char oper, char* c);
 void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
-void search_tree(t_nodoA* treeA, int index);
+t_nodoB* search_tree(t_nodoA* treeA, int index);
 void remove_tree(t_nodoA* treeA, int index);
 
 void A_init(t_nodoA* treeA);
