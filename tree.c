@@ -176,11 +176,11 @@ t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB)
 }
 
 /* ==================== ARVORE --B-- ==================== */
-t_nodoB* cria_arvoreB(char* c)
-{
-    return 0;
-}
 
+void imprime_arvoreB(t_nodoB* nodoB)
+{
+    
+}
 
 t_nodoB* cria_nodoB(int chave)
 {
@@ -189,9 +189,11 @@ t_nodoB* cria_nodoB(int chave)
     if (nodo==NULL)
         kill("erro ao alocar nodo",1);
     
+    nodo->chave=chave;
     nodo->pai=NULL;
-
-    return 0;
+    nodo->L=NULL;
+    nodo->R=NULL;
+    return nodo;
 }
 
 /* ===================== UTILS ===================== */
@@ -217,4 +219,7 @@ void kill(char *msg, int signal)
 {
     fprintf(stderr, "%s\n", msg);
     exit(signal);
+
+
+
 }
