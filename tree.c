@@ -225,7 +225,7 @@ t_nodoB* cria_nodoB(void)
         kill("erro ao alocar nodo",1);
     
     nodo->pai = NULL;
-    nodo->chave = NULL;
+    nodo->chave = 0;
     nodo->L = NULL;
     nodo->R = NULL;
 
@@ -276,7 +276,6 @@ void place_nodoB(t_nodoB *this, t_nodoB *folha)
     /* se ambos ocupado */
     else 
         kill("nao foi possivel colocar folha", 2); 
-
 }
 
 int my_atoi(char* c, int i, int *diff)

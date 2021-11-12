@@ -34,15 +34,7 @@ typedef struct t_nodoA
     struct t_nodoA *R;
 }t_nodoA;
 
-typedef struct Arvore_A
-{
-    struct t_nodoA *raiz;
-}Arvore_A;
 
-typedef struct Arvore_B
-{
-    struct t_nodoB *raiz;
-}Arvore_B;
 
 /* ARVORE A */
 char read_oper(char* c);
