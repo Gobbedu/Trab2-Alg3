@@ -53,14 +53,18 @@ void remove_tree(t_nodoA* treeA, int index);
 
 void A_init(t_nodoA* treeA);
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB);
+void preordem_A(t_nodoA* nodo);
 
 
 /* ARVORE B */
 t_nodoB* cria_arvoreB(char* c);
+t_nodoB* cria_nodoB(void);
+void preordem_B(t_nodoB* nodo);
 
 /* UTILS */
 int index_strB(char* c);
 int index_nodoB(t_nodoB* nodoB);
+int my_atoi(char* c, int i, int *diff);
 
 int my_atoi(char* c, int i, int *diff);
 

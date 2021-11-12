@@ -26,38 +26,6 @@ void A_init(t_nodoA* treeA)
     treeA->key = NULL;
 }
 
-int my_atoi(char* c, int i, int *diff)
-{
-    int aux, n = 1;
-    /* contabiliza quantos caracteres pular ao ler int maior que 9 */
-    *diff = 0;
-    
-    /* numeros '48' == 0 e '57' == 9 */
-    if (c[i] >= 48 && c[i] <= 57)
-    {
-        aux = c[i] - 48; 
-    
-        /* enquanto proximo caracter for numero */
-        while((i+n + 1) < strlen(c) && c[i + n] != ')')
-        {
-            aux *= 10;
-            aux += c[i+n] - 48;
-            n++;
-        }
-
-        *diff = n - 1;
-
-        /* printf("aux: %d\n", aux); printf("diff: %d\n", *diff); */
-
-        return aux;
-    }
-
-    /* caso  contrario */
-    fprintf(stderr, "to num: '%c', ", c[i]);
-    kill("operacao nao suportada", 2);
-    return 0;
-}
-
 char read_oper(char* c)
 {
     if( c[0] == 'i')
@@ -139,15 +107,15 @@ t_nodoB* search_tree(t_nodoA* treeA, int index)
     /* TODO */
     
     /* Base: nodo vazio ou chave presente */
-    if (treeA == NULL || treeA->key == index)
-       return treeA;
+    if (treeA == NULL || treeA->key == NULL)
+       return NULL;
     
     /* chave maior que nodo, procura na direita */
-    if (treeA->key < index)
-       return search(treeA->R, index);
+    if (treeA->key == NULL)
+       return search_tree(treeA->R, index);
  
     /* chave menor que nodo, procura da esquerda */
-    return search(treeA->L, index);
+    return search_tree(treeA->L, index);
 }
 
 void remove_tree(t_nodoA* treeA, int index)
@@ -175,23 +143,106 @@ t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB)
     return aux;
 }
 
-/* ==================== ARVORE --B-- ==================== */
-t_nodoB* cria_arvoreB(char* c)
+void preordem_A(t_nodoA *no)
 {
-    return 0;
+    if (no != NULL)
+    {
+        printf("[");
+        preordem_B(no->key);
+        printf("\n");
+        preordem_A(no->L);
+        preordem_A(no->R);
+        printf("]");
+    }
+}
+/* ==================== ARVORE --B-- ==================== */
+t_nodoB* cria_arvoreB(char* entrada)
+{
+    /* copiado e colado do T1 */
+    int i, aux = 0;
+    t_nodoB *raiz, *nodo, *atual;
+
+    // printf("criando %s\n", entrada);
+
+    atual = cria_nodoB();
+    raiz = NULL;
+
+    i = 0;
+    while(entrada[i] != '\0')
+    {
+        /*
+        printf("lendo %c\n", entrada[i]);
+        */
+        if (entrada[i] == '(')
+        {
+            /* se raiz nao existe ( primeiro nodo ) */
+            if( raiz == NULL )
+            {
+                raiz = cria_nodoB();
+                atual = raiz;
+            }
+            /* insere novo nodo */
+            else
+            {
+                nodo = cria_nodoB();
+                /* assing pai */
+                nodo->pai = atual;
+                /* se esquerda livre */    
+                if( atual->L == NULL )
+                    atual->L = nodo;
+                /* se esquerda ocupada */
+                else if(atual->R == NULL)
+                    atual->R = nodo;
+                /* se ambos ocupado */
+                else 
+                    kill("nao foi possivel colocar folha", 2); 
+                atual = nodo;
+            }
+
+            
+        }    
+        else if (entrada[i] == ')' && atual != raiz )
+            atual = atual->pai;
+    
+        else if ( entrada[i] != '(' && entrada[i] != ')')
+        {
+            // atual->chave = atoi(entrada[i]);
+            atual->chave = my_atoi(entrada, i, &aux);
+            i += aux;
+        }
+        
+        i++;
+    }
+
+    return raiz;
 }
 
-
-t_nodoB* cria_nodoB(int chave)
+t_nodoB* cria_nodoB(void)
 {
     t_nodoB* nodo;
     nodo = malloc(sizeof(t_nodoB));
     if (nodo==NULL)
         kill("erro ao alocar nodo",1);
     
-    nodo->pai=NULL;
+    nodo->pai = NULL;
+    nodo->chave = NULL;
+    nodo->L = NULL;
+    nodo->R = NULL;
 
-    return 0;
+
+    return nodo;
+}
+
+void preordem_B(t_nodoB *no)
+{    
+    if (no != NULL)
+    {
+        printf("(");
+        printf("%d", no->chave);
+        preordem_B(no->L);
+        preordem_B(no->R);
+        printf(")");
+    }
 }
 
 /* ===================== UTILS ===================== */
@@ -206,6 +257,57 @@ int index_nodoB(t_nodoB* nodoB/*, char* c  */)
 int index_strB(char* c)
 {
     /* TODO */
+    return 0;
+}
+
+void place_nodoB(t_nodoB *this, t_nodoB *folha)
+{
+    /* salva anterior */
+    folha->pai = this;
+    
+    /* se esquerda livre */    
+    if( this->L == NULL )
+        this->L = folha;
+    
+    /* se esquerda ocupada */
+    else if( this->L != NULL && this->R == NULL)
+        this->R = folha;
+
+    /* se ambos ocupado */
+    else 
+        kill("nao foi possivel colocar folha", 2); 
+
+}
+
+int my_atoi(char* c, int i, int *diff)
+{
+    int aux, n = 1;
+    /* contabiliza quantos caracteres pular ao ler int maior que 9 */
+    *diff = 0;
+    
+    /* numeros '48' == 0 e '57' == 9 */
+    if (c[i] >= 48 && c[i] <= 57)
+    {
+        aux = c[i] - 48; 
+    
+        /* enquanto proximo caracter for numero */
+        while((i+n + 1) < strlen(c) && (c[i + n] >= 48 &&  c[i + n] <= 57) )
+        {
+            aux *= 10;
+            aux += c[i+n] - 48;
+            n++;
+        }
+
+        *diff = n - 1;
+
+        // printf("aux: %d\n", aux); printf("diff: %d\n", *diff);
+
+        return aux;
+    }
+
+    /* caso  contrario */
+    fprintf(stderr, "to num: '%c', ", c[i]);
+    kill("operacao nao suportada", 2);
     return 0;
 }
 
