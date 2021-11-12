@@ -77,6 +77,9 @@ void opera(t_nodoA *treeA, char oper, char* c)
     {
         fprintf(stderr, "searching %s \n", c);
         search_tree(treeA, index_strB(c));
+        fprintf(stderr, "A árvore com o valor de indexação %d foi encontrada:\n",index_strB(c) );
+        /*Mostrar o nodo achado*/
+
     }
     else if( oper == 'r')
     {
@@ -92,16 +95,15 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
         treeA->key = nodoB;
     }
     /* se nodoB =< key --> L */
-    else if( index_nodoB(treeA->key) <= index_nodoB(nodoB) )
+    else if( calc_index(treeA->key) >calc_index(nodoB) )
     {
         if( treeA->L == NULL)
             treeA->L = cria_nodoA(treeA, nodoB);
-
         else
             insert_tree(treeA->L, nodoB);
     }
     /* se nodoB >= key --> R */
-    else if( index_nodoB(treeA->key) >= index_nodoB(nodoB) )
+    else if( calc_index(treeA->key) < calc_index(nodoB) )
     {
         if( treeA->R == NULL)
             treeA->R = cria_nodoA(treeA, nodoB);
@@ -113,28 +115,30 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
 
 t_nodoB* search_tree(t_nodoA* treeA, int index)
 {
-    /* TODO */
-    
-    /* Base: nodo vazio ou chave presente */
-    if (treeA == NULL || treeA->key == NULL)
-       return NULL;
+    /* Base: nodo vazio*/
+    if ((treeA == NULL) || (treeA->key == NULL))
+        return NULL;
     
     /* chave maior que nodo, procura na direita */
-    if (treeA->key == NULL)
-       return search_tree(treeA->R, index);
- 
+    if (calc_index(treeA->key)<index)
+        return (search_tree(treeA->R, index));
+
     /* chave menor que nodo, procura da esquerda */
-    return search_tree(treeA->L, index);
+    if(calc_index(treeA->key)>index)
+        return(search_tree(treeA->L, index));
+    
+    return(treeA->key);
 }
 
 void remove_tree(t_nodoA* treeA, int index)
 {   
     /* geeks for geeks tem explicacao massa */
     /* https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/?ref=lbp */
-    t_nodoB* aux;
+    t_nodoB* aux=NULL;
     aux = search_tree(treeA, index);
     if( aux == NULL )
         fprintf(stderr, "arvore %i nao encontrada\n", index);
+
     /*
     else 
         deleta arvoreB 'aux' 
@@ -270,13 +274,7 @@ int calc_index(t_nodoB* nodoB)
     return index;     
 }
 
-/* calcula index arvore B com arvore? */
-int index_nodoB(t_nodoB* nodoB/*, char* c  */)
-{
-    /* TODO */
-    return 0;
-}
-/* calcula index arvore B com string? */
+/* calcula index arvore B com string */
 int index_strB(char* entrada)
 {
     int i=0;
