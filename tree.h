@@ -40,8 +40,10 @@ typedef struct t_nodoA
 char read_oper(char* c);
 void opera(t_nodoA* treeA, char oper, char* c);
 void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
-t_nodoB* search_tree(t_nodoA* treeA, int index);
+t_nodoB* search_treeB(t_nodoA* treeA, int index);
+t_nodoA* search_treeA(t_nodoA* treeA, int index);
 void remove_tree(t_nodoA* treeA, int index);
+void reorganize_tree(t_nodoA* treeA);
 
 void A_init(t_nodoA* treeA);
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB);
