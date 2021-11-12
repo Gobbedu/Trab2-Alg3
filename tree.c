@@ -15,7 +15,14 @@
     remove_tree();
 */
 
+/* 
+[ ] funcao que calcula index da arvore B
+[ ] funcao de excluir arvore B
+[ ] funcao de buscar  arvore B
 
+[ ] corrigir imprime da arvore A
+[ ] corrigir imprime da arvore B
+*/
 
 /* =================== ARVORE --A-- =================== */
 
