@@ -57,6 +57,7 @@ void preordem_B(t_nodoB* nodo);
 int index_strB(char* c);
 int index_nodoB(t_nodoB* nodoB);
 int my_atoi(char* c, int i, int *diff);
+int calc_index(t_nodoB* nodoB);
 
 int my_atoi(char* c, int i, int *diff);
 

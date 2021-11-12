@@ -165,6 +165,8 @@ void preordem_A(t_nodoA *no)
     }
 }
 /* ==================== ARVORE --B-- ==================== */
+
+
 t_nodoB* cria_arvoreB(char* entrada)
 {
     /* copiado e colado do T1 */
@@ -256,6 +258,18 @@ void preordem_B(t_nodoB *no)
 
 /* ===================== UTILS ===================== */
 
+
+int calc_index(t_nodoB* nodoB)
+{
+    int index=0;
+    index+=nodoB->chave;
+    if(nodoB->L!=NULL)
+        index+=calc_index(nodoB->L);
+    if(nodoB->R!=NULL)
+        index+=calc_index(nodoB->R);
+    return index;     
+}
+
 /* calcula index arvore B com arvore? */
 int index_nodoB(t_nodoB* nodoB/*, char* c  */)
 {
@@ -263,11 +277,23 @@ int index_nodoB(t_nodoB* nodoB/*, char* c  */)
     return 0;
 }
 /* calcula index arvore B com string? */
-int index_strB(char* c)
+int index_strB(char* entrada)
 {
-    /* TODO */
-    return 0;
+    int i=0;
+    int aux = 0;
+    int index=0;
+    while(entrada[i] != '\0')
+    {
+        if ( entrada[i] != '(' && entrada[i] != ')')
+        {
+            index += my_atoi(entrada, i, &aux);
+            i += aux;
+        }
+        i++;
+    }
+    return index;
 }
+
 
 void place_nodoB(t_nodoB *this, t_nodoB *folha)
 {
