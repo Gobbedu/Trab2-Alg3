@@ -15,6 +15,8 @@
     remove_tree();
 */
 
+
+
 /* =================== ARVORE --A-- =================== */
 
 /* transforma input string em integer */
