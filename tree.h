@@ -74,7 +74,7 @@ void kill(char *msg, int sig);
 t_nodoA *min(t_nodoA *no);
 t_nodoA *sucessor (t_nodoA *no);
 void ajustaNoPai(t_nodoA *no, t_nodoA *novo);
-void exclui (t_nodoA *no) ;
+int exclui (t_nodoA *no) ;
 
 
 
