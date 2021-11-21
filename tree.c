@@ -36,31 +36,30 @@ void A_init(t_nodoA* treeA)
 
 char read_oper(char* c)
 {
-    if( c[0] == 'i')
+    switch (c[0])
     {
-        // fprintf(stdout, "insert operator\n");
-        return c[0];
-    }
-    else if( c[0] == 'b')
-    {
-        // fprintf(stdout, "search operator\n");
-        return c[0];
-    }
-    else if( c[0] == 'r')
-    {
-        // fprintf(stdout, "remove operator\n");
-        return c[0];
-    }
-    else if( c[0] == '0' )
-    {
-        // fprintf(stdout, "end operator\n");
-        return c[0];
-    }
-    else
-    {
+    case 'i':
+        return 'i';
+        break;
+    
+    case 'b':
+        return 'b';
+        break;
+    
+    case 'r':
+        return 'r';
+        break;
+    
+    case '0':
+        return '0';
+        break;
+    
+    default:
         fprintf(stderr, "%s , operador nao valido\n", c);
         kill("operador invalido", 1);
+        break;
     }
+ 
     return 0;
 }
 
@@ -296,8 +295,12 @@ void preordem_A(t_nodoA *no)
             aux = 0;
 
         printf("[");
-        preordem_B(no->key);
-        printf(" : %d\n", aux);
+
+        if( no->key != NULL){
+            preordem_B(no->key);
+            printf(" : %d\n", aux);
+        }
+
         preordem_A(no->L);
         preordem_A(no->R);
         printf("]\n");
@@ -409,7 +412,7 @@ void preordem_B(t_nodoB *no)
     if (no != NULL)
     {
         printf("(");
-        if( no->chave != EMPTY && no->chave != NULL)
+        if( no->chave != EMPTY )
             printf("%d", no->chave);
 
         preordem_B(no->L);
@@ -424,7 +427,8 @@ void preordem_B(t_nodoB *no)
 int index_treeB(t_nodoB* nodoB)
 {
     int index = 0;
-    index += nodoB->chave;
+    if( nodoB->chave != EMPTY )
+        index += nodoB->chave;
 
     if(nodoB->L != NULL  )
         index += index_treeB(nodoB->L);
