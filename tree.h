@@ -17,6 +17,7 @@
 
 /* tamanho maximo de uma string no input */
 #define MAX_SZ 200
+#define EMPTY -2147483646
 
 typedef struct t_nodoB 
 {
@@ -56,10 +57,12 @@ t_nodoB* cria_nodoB(void);
 void preordem_B(t_nodoB* nodo);
 
 /* UTILS */
+void stream_input(char const *argv[], int argc, t_nodoA* raizA);
+
 int index_strB(char* c);
 int index_nodoB(t_nodoB* nodoB);
 int my_atoi(char* c, int i, int *diff);
-int calc_index(t_nodoB* nodoB);
+int index_treeB(t_nodoB* nodoB);
 
 int my_atoi(char* c, int i, int *diff);
 
