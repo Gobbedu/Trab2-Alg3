@@ -64,26 +64,27 @@ char read_oper(char* c)
     return 0;
 }
 
-void opera(t_nodoA *treeA, char oper, char* c)
+void opera(t_nodoA *treeA, char oper, char* str_treeB)
 {
     /* redireciona para funcao apropriada */
     if( oper == 'i')
     {
-        fprintf(stderr, "inserting %s \n", c);
-        insert_tree(treeA, cria_arvoreB(c));
+        fprintf(stderr, "inserting %s \n", str_treeB);
+        insert_tree(treeA, cria_arvoreB(str_treeB));
     }
     else if( oper == 'b')
     {
-        fprintf(stderr, "searching %s \n", c);
-        search_for_treeB(treeA, index_strB(c));
-        fprintf(stderr, "A árvore com o valor de indexação %d foi encontrada:\n",index_strB(c) );
+        fprintf(stderr, "searching %s \n", str_treeB);
+        search_for_treeB(treeA, index_strB(str_treeB));
+        fprintf(stderr, "A árvore com o valor de indexação %d foi encontrada:\n",index_strB(str_treeB) );
         /*Mostrar o nodo achado*/
 
     }
     else if( oper == 'r')
     {
-        fprintf(stderr, "removing %s \n", c);
-        remove_treeA(treeA, index_strB(c));
+        fprintf(stderr, "removing %s \n", str_treeB);
+        if( !remove_treeA(treeA, index_strB(str_treeB)) )
+            printf("nao foi possivel remover %s, chave %d nao existe\n", str_treeB, index_strB(str_treeB));
     }
 }
 
@@ -163,7 +164,7 @@ void reorganize_tree(t_nodoA* treeA)
         }
 }
 
-t_nodoA* remove_treeA(t_nodoA* treeA, int index)
+t_nodoA* remove_treeA(t_nodoA* root, int key)
 {   
     /* geeks for geeks tem explicacao massa */
     /* https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/?ref=lbp */
@@ -176,54 +177,76 @@ t_nodoA* remove_treeA(t_nodoA* treeA, int index)
 // =====================================================================================
 //     struct node* remove_treeA(struct node* root, int key)
 // {
-    /*
-    // base case
+    t_nodoA* temp;
+
+    // caso base
     if (root == NULL)
         return root;
  
-    // If the key to be deleted
-    // is smaller than the root's
-    // key, then it lies in left subtree
-    if (key < root->key)
-        root->left = remove_treeA(root->left, key);
+    // se chave a deletar for menor que chave da raiz a chave esta a esquerda
+    if (key < index_treeB(root->key) )
+        root->L = remove_treeA(root->L, key);
  
-    // If the key to be deleted
-    // is greater than the root's
-    // key, then it lies in right subtree
-    else if (key > root->key)
-        root->right = remove_treeA(root->right, key);
+    // se chave a deletar for maior que chave da raiz a chave esta a direita
+    else if (key > index_treeB(root->key) )
+        root->R = remove_treeA(root->R, key);
  
-    // if key is same as root's key,
-    // then This is the node
-    // to be deleted
-    else {
-        // node with only one child or no child
-        if (root->left == NULL) {
-            struct node* temp = root->right;
+    // achou a chave a deletar
+    else if( key == index_treeB(root->key) )
+    {
+        // nodo com uma folha
+        if (root->L == NULL && root->R != NULL) {
+            temp = root->R;
+            remove_treeB(root->key);
             free(root);
             return temp;
         }
-        else if (root->right == NULL) {
-            struct node* temp = root->left;
+        else if (root->R == NULL && root->L != NULL) {
+            temp = root->L;
+            remove_treeB(root->key);
             free(root);
             return temp;
         }
  
-        // node with two children:
-        // Get the inorder successor
-        // (smallest in the right subtree)
-        struct node* temp = minValueNode(root->right);
- 
-        // Copy the inorder
-        // successor's content to this node
-        root->key = temp->key;
- 
-        // Delete the inorder successor
-        root->right = remove_treeA(root->right, temp->key);
+        // nodo com duas folhas
+        else if( root->L != NULL && root->R != NULL)
+        {
+            // Get the inorder successor
+            // (smallest in the right subtree)
+            temp = menorNodo(root->R);
+    
+            // Copy the inorder
+            // successor's content to this node
+            root->key = temp->key;
+    
+            // Delete the inorder successor
+            root->R = remove_treeA(root->R, index_treeB(temp->key) );
+        }
+
+        // nodo eh folha
+        else if( root->L == NULL && root->R == NULL )
+        {
+            remove_treeB(root->key);
+            free(root);
+            root = NULL;
+        }
     }
+    // nao achou a chave a deletar, retorna nada
+    else    
+        return NULL;
+
     return root;
-    */
-   return 0;
+}
+
+t_nodoA* menorNodo(t_nodoA* nodoA)
+{
+    t_nodoA* atual;
+    atual = nodoA;
+
+    while(atual && atual->L != NULL)
+        atual = atual->L;
+
+    return atual;
 }
 
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB)
@@ -251,6 +274,17 @@ void preordem_A(t_nodoA *no)
         preordem_A(no->L);
         preordem_A(no->R);
         printf("]\n");
+    }
+}
+
+void free_treeA(t_nodoA* nodoA)
+{
+    if( nodoA != NULL )
+    {
+        free_treeA(nodoA->L);
+        free_treeA(nodoA->R);
+        remove_treeB(nodoA->key);
+        free(nodoA);
     }
 }
 /* ==================== ARVORE --B-- ==================== */
@@ -348,7 +382,7 @@ void preordem_B(t_nodoB *no)
     if (no != NULL)
     {
         printf("(");
-        if( no->chave != EMPTY)
+        if( no->chave != EMPTY && no->chave != NULL)
             printf("%d", no->chave);
 
         preordem_B(no->L);

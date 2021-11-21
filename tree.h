@@ -42,11 +42,14 @@ t_nodoB* search_for_treeB(t_nodoA* treeA, int index);
 t_nodoA* search_for_treeA(t_nodoA* treeA, int index);
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB);
 t_nodoA* remove_treeA(t_nodoA* treeA, int index);
+t_nodoA* menorNodo(t_nodoA* nodo);
+
 void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
 void opera(t_nodoA* treeA, char oper, char* c);
 void reorganize_tree(t_nodoA* treeA);
-void A_init(t_nodoA* treeA);
 void preordem_A(t_nodoA* nodo);
+void free_treeA(t_nodoA* raiz);
+void A_init(t_nodoA* treeA);
 char read_oper(char* c);
 
 /* ARVORE B */

@@ -7,5 +7,7 @@ int main(int argc, char const *argv[])
 
     stream_input(argv, argc, &raizA);
 
+    free_treeA(&raizA);
+
     return 0;
 }
