@@ -82,7 +82,7 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB)
     else if( oper == 'r')
     {
         fprintf(stderr, "removing %s \n", str_treeB);
-        if(!exclui(search_tree(treeA,index_strB(str_treeB))))
+        if(!exclui(search_tree(treeA,index_strB(str_treeB))));
             printf("nao foi possivel remover %s, chave %d nao existe\n", str_treeB, index_strB(str_treeB));
     }
 }
