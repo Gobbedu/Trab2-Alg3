@@ -83,7 +83,8 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB)
     else if( oper == 'r')
     {
         fprintf(stderr, "removing %s \n", str_treeB);
-        if( !remove_treeA(treeA, index_strB(str_treeB)) )
+        //if( !remove_treeA(treeA, index_strB(str_treeB)) )
+        exclui(search_tree(treeA,index_strB(str_treeB)));
             printf("nao foi possivel remover %s, chave %d nao existe\n", str_treeB, index_strB(str_treeB));
     }
 }
@@ -131,6 +132,71 @@ t_nodoA* search_tree(t_nodoA* nodoA, int index)
     
     return(nodoA);
 }
+
+t_nodoA *min(t_nodoA *no){
+    if (no->L == NULL)
+        return no;
+    else
+        return min(no->L);
+}
+
+t_nodoA *sucessor (t_nodoA *no){
+    t_nodoA *s = NULL;
+    if (no->R != NULL) 
+        return min (no->R);
+    else 
+    {
+        s = no->pai;
+        while (s != NULL && no == s->R) {
+            no = s;
+            s = s->pai;
+        }        
+    }
+    return s;
+}
+
+void ajustaNoPai(t_nodoA *no, t_nodoA *novo){
+    if (no->pai != NULL) {
+        if (no->pai->L == no)
+            no->pai->L = novo;
+        else
+            no->pai->R = novo;
+        if (novo != NULL)
+           novo->pai = no->pai;
+    }
+}
+
+void exclui (t_nodoA *no) 
+{
+    t_nodoA *s;
+    if (no->L == NULL)
+    {
+        ajustaNoPai(no, no->R);
+        remove_treeB(no->key);
+        free (no);
+    } 
+    else 
+    {
+        if (no->R == NULL)
+        {
+            ajustaNoPai(no, no->L);
+            remove_treeB(no->key);
+            free(no);
+        }
+        else 
+        {            
+            s = sucessor (no);
+            ajustaNoPai(s, s->R);
+            s->L = no->L;
+            s->R = no->R;
+            no->L->pai=s;
+            ajustaNoPai(no, s);
+            remove_treeB(no->key);
+            free(no);
+        }
+    }        
+}
+
 
 
 t_nodoA* remove_treeA(t_nodoA* root, int key)

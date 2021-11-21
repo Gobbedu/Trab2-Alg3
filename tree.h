@@ -70,4 +70,13 @@ int my_atoi(char* c, int i, int *diff);
 int stop(char* c);
 void kill(char *msg, int sig);
 
+
+t_nodoA *min(t_nodoA *no);
+t_nodoA *sucessor (t_nodoA *no);
+void ajustaNoPai(t_nodoA *no, t_nodoA *novo);
+void exclui (t_nodoA *no) ;
+
+
+
+
 #endif
