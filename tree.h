@@ -38,23 +38,22 @@ typedef struct t_nodoA
 
 
 /* ARVORE A */
-char read_oper(char* c);
-void opera(t_nodoA* treeA, char oper, char* c);
-void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
-t_nodoB* search_treeB(t_nodoA* treeA, int index);
-t_nodoA* search_treeA(t_nodoA* treeA, int index);
-void remove_tree(t_nodoA* treeA, int index);
-void reorganize_tree(t_nodoA* treeA);
-
-void A_init(t_nodoA* treeA);
+t_nodoB* search_for_treeB(t_nodoA* treeA, int index);
+t_nodoA* search_for_treeA(t_nodoA* treeA, int index);
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB);
+t_nodoA* remove_treeA(t_nodoA* treeA, int index);
+void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
+void opera(t_nodoA* treeA, char oper, char* c);
+void reorganize_tree(t_nodoA* treeA);
+void A_init(t_nodoA* treeA);
 void preordem_A(t_nodoA* nodo);
-
+char read_oper(char* c);
 
 /* ARVORE B */
+void remove_treeB(t_nodoB* nodo);
+void preordem_B(t_nodoB* nodo);
 t_nodoB* cria_arvoreB(char* c);
 t_nodoB* cria_nodoB(void);
-void preordem_B(t_nodoB* nodo);
 
 /* UTILS */
 void stream_input(char const *argv[], int argc, t_nodoA* raizA);
