@@ -75,7 +75,7 @@ void opera(t_nodoA *treeA, char oper, char* c)
     else if( oper == 'b')
     {
         fprintf(stderr, "searching %s \n", c);
-        search_treeB(treeA, index_strB(c));
+        search_for_treeB(treeA, index_strB(c));
         fprintf(stderr, "A árvore com o valor de indexação %d foi encontrada:\n",index_strB(c) );
         /*Mostrar o nodo achado*/
 
@@ -83,7 +83,7 @@ void opera(t_nodoA *treeA, char oper, char* c)
     else if( oper == 'r')
     {
         fprintf(stderr, "removing %s \n", c);
-        remove_tree(treeA, index_strB(c));
+        remove_treeA(treeA, index_strB(c));
     }
 }
 
@@ -112,7 +112,7 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
     }
 }
 
-t_nodoB* search_treeB(t_nodoA* treeA, int index)
+t_nodoB* search_for_treeB(t_nodoA* treeA, int index)
 {
     /* Base: nodo vazio*/
     if ((treeA == NULL) || (treeA->key == NULL))
@@ -120,16 +120,16 @@ t_nodoB* search_treeB(t_nodoA* treeA, int index)
     
     /* chave maior que nodo, procura na direita */
     if (index_treeB(treeA->key)<index)
-        return (search_treeB(treeA->R, index));
+        return (search_for_treeB(treeA->R, index));
 
     /* chave menor que nodo, procura da esquerda */
     if(index_treeB(treeA->key)>index)
-        return(search_treeB(treeA->L, index));
+        return(search_for_treeB(treeA->L, index));
     
     return(treeA->key);
 }
 
-t_nodoA* search_treeA(t_nodoA* treeA, int index)
+t_nodoA* search_for_treeA(t_nodoA* treeA, int index)
 {
     /* Base: nodo vazio*/
     if ((treeA == NULL) || (treeA->key == NULL))
@@ -137,11 +137,11 @@ t_nodoA* search_treeA(t_nodoA* treeA, int index)
     
     /* chave maior que nodo, procura na direita */
     if (index_treeB(treeA->key)<index)
-        return (search_treeA(treeA->R, index));
+        return (search_for_treeA(treeA->R, index));
 
     /* chave menor que nodo, procura da esquerda */
     if(index_treeB(treeA->key)>index)
-        return(search_treeA(treeA->L, index));
+        return(search_for_treeA(treeA->L, index));
     
     return(treeA);
 }
@@ -163,18 +163,67 @@ void reorganize_tree(t_nodoA* treeA)
         }
 }
 
-void remove_tree(t_nodoA* treeA, int index)
+t_nodoA* remove_treeA(t_nodoA* treeA, int index)
 {   
     /* geeks for geeks tem explicacao massa */
     /* https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/?ref=lbp */
-    t_nodoB* aux=NULL;
-    aux = search_treeB(treeA, index);
-    if( aux == NULL )
-        fprintf(stderr, "arvore %i nao encontrada\n", index);
-    else
-        reorganize_tree(search_treeA(treeA,index));
-            
-
+    // t_nodoB* aux=NULL;
+    // aux = search_for_treeB(treeA, index);
+    // if( aux == NULL )
+    //     fprintf(stderr, "arvore %i nao encontrada\n", index);
+    // else
+    //     reorganize_tree(search_for_treeA(treeA,index));
+// =====================================================================================
+//     struct node* remove_treeA(struct node* root, int key)
+// {
+    /*
+    // base case
+    if (root == NULL)
+        return root;
+ 
+    // If the key to be deleted
+    // is smaller than the root's
+    // key, then it lies in left subtree
+    if (key < root->key)
+        root->left = remove_treeA(root->left, key);
+ 
+    // If the key to be deleted
+    // is greater than the root's
+    // key, then it lies in right subtree
+    else if (key > root->key)
+        root->right = remove_treeA(root->right, key);
+ 
+    // if key is same as root's key,
+    // then This is the node
+    // to be deleted
+    else {
+        // node with only one child or no child
+        if (root->left == NULL) {
+            struct node* temp = root->right;
+            free(root);
+            return temp;
+        }
+        else if (root->right == NULL) {
+            struct node* temp = root->left;
+            free(root);
+            return temp;
+        }
+ 
+        // node with two children:
+        // Get the inorder successor
+        // (smallest in the right subtree)
+        struct node* temp = minValueNode(root->right);
+ 
+        // Copy the inorder
+        // successor's content to this node
+        root->key = temp->key;
+ 
+        // Delete the inorder successor
+        root->right = remove_treeA(root->right, temp->key);
+    }
+    return root;
+    */
+   return 0;
 }
 
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB)
@@ -265,6 +314,17 @@ t_nodoB* cria_arvoreB(char* entrada)
     }
 
     return raiz;
+}
+
+void remove_treeB(t_nodoB* nodoB)
+{
+    /* remove arvore inteira */
+    if( nodoB != NULL )
+    {
+        remove_treeB(nodoB->L);
+        remove_treeB(nodoB->R);
+        free(nodoB);
+    }
 }
 
 t_nodoB* cria_nodoB(void)

@@ -7,7 +7,5 @@ int main(int argc, char const *argv[])
 
     stream_input(argv, argc, &raizA);
 
-    preordem_A(&raizA);
-
     return 0;
 }
