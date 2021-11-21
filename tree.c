@@ -94,7 +94,7 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
         treeA->key = nodoB;
     }
     /* se nodoB =< key --> L */
-    else if( index_treeB(treeA->key) >index_treeB(nodoB) )
+    else if( index_treeB(treeA->key) > index_treeB(nodoB) )
     {
         if( treeA->L == NULL)
             treeA->L = cria_nodoA(treeA, nodoB);
@@ -303,7 +303,7 @@ void preordem_A(t_nodoA *no)
 
         printf("[");
 
-        if( no->key != NULL){
+        if( no->key != NULL && no->key->chave != EMPTY){
             preordem_B(no->key);
             printf(" : %d\n", aux);
         }
