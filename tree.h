@@ -48,7 +48,7 @@ void opera(t_nodoA* treeA, char oper, char* c);
 void reorganize_tree(t_nodoA* treeA);
 void preordem_A(t_nodoA* nodo);
 void free_treeA(t_nodoA* raiz);
-void A_init(t_nodoA* treeA);
+t_nodoA* A_init(void);
 char read_oper(char* c);
 
 /* ARVORE B */
@@ -61,7 +61,6 @@ t_nodoB* cria_nodoB(void);
 void stream_input(char const *argv[], int argc, t_nodoA* raizA);
 
 int index_strB(char* c);
-int index_nodoB(t_nodoB* nodoB);
 int my_atoi(char* c, int i, int *diff);
 int index_treeB(t_nodoB* nodoB);
 

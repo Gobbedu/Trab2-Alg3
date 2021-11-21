@@ -14,9 +14,9 @@ CFLAGS = -Wall -ansi -g -std=c99
 NAME = busca
 
 # codigo
-CODED = main.c tree.c 
+CODED = main.c treeA.c treeB.c utils.c
 #objetos gerados
-objects = main.o  tree.o 
+objects = main.o  treeA.o treeB.o utils.o
 
 
 # REGRAS DE COMPILACAO
