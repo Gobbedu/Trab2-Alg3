@@ -21,8 +21,6 @@
 [ ] funcao de excluir arvore A
 [OK] funcao de buscar  arvore B
 
-[ ] corrigir imprime da arvore A
-[ ] corrigir imprime da arvore B
 */
 
 /* =================== ARVORE --A-- =================== */
