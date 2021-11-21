@@ -75,7 +75,7 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB)
     else if( oper == 'b')
     {
         fprintf(stderr, "searching %s \n", str_treeB);
-        search_for_treeB(treeA, index_strB(str_treeB));
+        search_tree(treeA, index_strB(str_treeB));
         fprintf(stderr, "A árvore com o valor de indexação %d foi encontrada:\n",index_strB(str_treeB) );
         /*Mostrar o nodo achado*/
 
@@ -83,7 +83,8 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB)
     else if( oper == 'r')
     {
         fprintf(stderr, "removing %s \n", str_treeB);
-        if( !remove_treeA(treeA, index_strB(str_treeB)) )
+        //if( !remove_treeA(treeA, index_strB(str_treeB)) )
+        exclui(search_tree(treeA,index_strB(str_treeB)));
             printf("nao foi possivel remover %s, chave %d nao existe\n", str_treeB, index_strB(str_treeB));
     }
 }
@@ -113,70 +114,96 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
     }
 }
 
-t_nodoB* search_for_treeB(t_nodoA* treeA, int index)
+
+
+t_nodoA* search_tree(t_nodoA* nodoA, int index)
 {
     /* Base: nodo vazio*/
-    if ((treeA == NULL) || (treeA->key == NULL))
+    if ((nodoA == NULL) || (nodoA->key == NULL))
         return NULL;
     
     /* chave maior que nodo, procura na direita */
-    if (index_treeB(treeA->key)<index)
-        return (search_for_treeB(treeA->R, index));
+    if (index_treeB(nodoA->key)<index)
+        return (search_tree(nodoA->R, index));
 
     /* chave menor que nodo, procura da esquerda */
-    if(index_treeB(treeA->key)>index)
-        return(search_for_treeB(treeA->L, index));
+    if(index_treeB(nodoA->key)>index)
+        return(search_tree(nodoA->L, index));
     
-    return(treeA->key);
+    return(nodoA);
 }
 
-t_nodoA* search_for_treeA(t_nodoA* treeA, int index)
-{
-    /* Base: nodo vazio*/
-    if ((treeA == NULL) || (treeA->key == NULL))
-        return NULL;
-    
-    /* chave maior que nodo, procura na direita */
-    if (index_treeB(treeA->key)<index)
-        return (search_for_treeA(treeA->R, index));
-
-    /* chave menor que nodo, procura da esquerda */
-    if(index_treeB(treeA->key)>index)
-        return(search_for_treeA(treeA->L, index));
-    
-    return(treeA);
-}
-
-void reorganize_tree(t_nodoA* treeA)
-{
-    if(treeA->L==NULL && treeA->R ==NULL)
-        treeA=NULL;
+t_nodoA *min(t_nodoA *no){
+    if (no->L == NULL)
+        return no;
     else
-        if(treeA->L!=NULL)
-        {
-            treeA=treeA->L;
-            reorganize_tree(treeA->L);
-        }
-        else
-        {
-            treeA=treeA->R;
-            reorganize_tree(treeA->R);
-        }
+        return min(no->L);
 }
+
+t_nodoA *sucessor (t_nodoA *no){
+    t_nodoA *s = NULL;
+    if (no->R != NULL) 
+        return min (no->R);
+    else 
+    {
+        s = no->pai;
+        while (s != NULL && no == s->R) {
+            no = s;
+            s = s->pai;
+        }        
+    }
+    return s;
+}
+
+void ajustaNoPai(t_nodoA *no, t_nodoA *novo){
+    if (no->pai != NULL) {
+        if (no->pai->L == no)
+            no->pai->L = novo;
+        else
+            no->pai->R = novo;
+        if (novo != NULL)
+           novo->pai = no->pai;
+    }
+}
+
+void exclui (t_nodoA *no) 
+{
+    t_nodoA *s;
+    if (no->L == NULL)
+    {
+        ajustaNoPai(no, no->R);
+        remove_treeB(no->key);
+        free (no);
+    } 
+    else 
+    {
+        if (no->R == NULL)
+        {
+            ajustaNoPai(no, no->L);
+            remove_treeB(no->key);
+            free(no);
+        }
+        else 
+        {            
+            s = sucessor (no);
+            ajustaNoPai(s, s->R);
+            s->L = no->L;
+            s->R = no->R;
+            no->L->pai=s;
+            ajustaNoPai(no, s);
+            remove_treeB(no->key);
+            free(no);
+        }
+    }        
+}
+
+
 
 t_nodoA* remove_treeA(t_nodoA* root, int key)
 {   
     /* geeks for geeks tem explicacao massa */
     /* https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/?ref=lbp */
-    // t_nodoB* aux=NULL;
-    // aux = search_for_treeB(treeA, index);
-    // if( aux == NULL )
-    //     fprintf(stderr, "arvore %i nao encontrada\n", index);
-    // else
-    //     reorganize_tree(search_for_treeA(treeA,index));
-// =====================================================================================
-//     struct node* remove_treeA(struct node* root, int key)
-// {
+
     t_nodoA* temp;
 
     // caso base

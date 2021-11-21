@@ -38,8 +38,7 @@ typedef struct t_nodoA
 
 
 /* ARVORE A */
-t_nodoB* search_for_treeB(t_nodoA* treeA, int index);
-t_nodoA* search_for_treeA(t_nodoA* treeA, int index);
+t_nodoA* search_tree(t_nodoA* nodoA, int index);
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB);
 t_nodoA* remove_treeA(t_nodoA* treeA, int index);
 t_nodoA* menorNodo(t_nodoA* nodo);
@@ -70,5 +69,14 @@ int my_atoi(char* c, int i, int *diff);
 
 int stop(char* c);
 void kill(char *msg, int sig);
+
+
+t_nodoA *min(t_nodoA *no);
+t_nodoA *sucessor (t_nodoA *no);
+void ajustaNoPai(t_nodoA *no, t_nodoA *novo);
+void exclui (t_nodoA *no) ;
+
+
+
 
 #endif
