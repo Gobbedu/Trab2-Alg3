@@ -68,12 +68,12 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB)
     /* redireciona para funcao apropriada */
     if( oper == 'i')
     {
-        fprintf(stderr, "inserting %s \n", str_treeB);
+        fprintf(stderr, "inserting %s : %d\n", str_treeB, index_strB(str_treeB));
         insert_tree(treeA, cria_arvoreB(str_treeB));
     }
     else if( oper == 'b')
     {
-        fprintf(stderr, "searching %s \n", str_treeB);
+        fprintf(stderr, "searching %s : %d\n", str_treeB, index_strB(str_treeB));
         search_tree(treeA, index_strB(str_treeB));
         fprintf(stderr, "A árvore com o valor de indexação %d foi encontrada:\n",index_strB(str_treeB) );
         /*Mostrar o nodo achado*/
@@ -81,7 +81,7 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB)
     }
     else if( oper == 'r')
     {
-        fprintf(stderr, "removing %s \n", str_treeB);
+        fprintf(stderr, "removing %s : %d\n", str_treeB, index_strB(str_treeB));
         //if( !remove_treeA(treeA, index_strB(str_treeB)) )
         exclui(search_tree(treeA,index_strB(str_treeB)));
             printf("nao foi possivel remover %s, chave %d nao existe\n", str_treeB, index_strB(str_treeB));
