@@ -171,31 +171,34 @@ int exclui (t_nodoA *no)
     {
         ajustaNoPai(no, no->R);
         remove_treeB(no->key);
+        no->key=NULL;
+        no=NULL;
         free (no);
         return 1;
     } 
-    else 
+    if (no->R == NULL)
     {
-        if (no->R == NULL)
-        {
-            ajustaNoPai(no, no->L);
-            remove_treeB(no->key);
-            free(no);
-            return 1;
-        }
-        else 
-        {            
-            s = sucessor (no);
-            ajustaNoPai(s, s->R);
-            s->L = no->L;
-            s->R = no->R;
-            no->L->pai=s;
-            ajustaNoPai(no, s);
-            remove_treeB(no->key);
-            free(no);
-            return 1;
-        }
-    }        
+        ajustaNoPai(no, no->L);
+        remove_treeB(no->key);
+        no->key=NULL;
+        no=NULL;
+        free(no);
+        return 1;
+    }
+    else 
+    {            
+        s = sucessor (no);
+        ajustaNoPai(s, s->R);
+        s->L = no->L;
+        s->R = no->R;
+        no->L->pai=s;
+        ajustaNoPai(no, s);
+        remove_treeB(no->key);
+        no->key=NULL;
+        no=NULL;
+        free(no);
+        return 1;
+    }
     return 0;
 }
 
@@ -431,15 +434,19 @@ void preordem_B(t_nodoB *no)
 int index_treeB(t_nodoB* nodoB)
 {
     int index = 0;
-    if( nodoB->chave != EMPTY )
-        index += nodoB->chave;
+    if(nodoB!=NULL)
+    {
+        if( nodoB->chave != EMPTY )
+            index += nodoB->chave;
 
-    if(nodoB->L != NULL  )
-        index += index_treeB(nodoB->L);
-    if(nodoB->R != NULL )
-        index += index_treeB(nodoB->R);
+        if(nodoB->L != NULL  )
+            index += index_treeB(nodoB->L);
+        if(nodoB->R != NULL )
+            index += index_treeB(nodoB->R);
+    }
 
     return index;     
+
 }
 
 /* calcula index arvore B com string */
