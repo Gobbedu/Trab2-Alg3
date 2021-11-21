@@ -21,8 +21,6 @@
 [ ] funcao de excluir arvore A
 [OK] funcao de buscar  arvore B
 
-[ ] corrigir imprime da arvore A
-[ ] corrigir imprime da arvore B
 */
 
 /* =================== ARVORE --A-- =================== */
@@ -97,7 +95,7 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
         treeA->key = nodoB;
     }
     /* se nodoB =< key --> L */
-    else if( calc_index(treeA->key) >calc_index(nodoB) )
+    else if( index_treeB(treeA->key) >index_treeB(nodoB) )
     {
         if( treeA->L == NULL)
             treeA->L = cria_nodoA(treeA, nodoB);
@@ -105,7 +103,7 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
             insert_tree(treeA->L, nodoB);
     }
     /* se nodoB >= key --> R */
-    else if( calc_index(treeA->key) < calc_index(nodoB) )
+    else if( index_treeB(treeA->key) < index_treeB(nodoB) )
     {
         if( treeA->R == NULL)
             treeA->R = cria_nodoA(treeA, nodoB);
@@ -122,11 +120,11 @@ t_nodoB* search_for_treeB(t_nodoA* treeA, int index)
         return NULL;
     
     /* chave maior que nodo, procura na direita */
-    if (calc_index(treeA->key)<index)
+    if (index_treeB(treeA->key)<index)
         return (search_for_treeB(treeA->R, index));
 
     /* chave menor que nodo, procura da esquerda */
-    if(calc_index(treeA->key)>index)
+    if(index_treeB(treeA->key)>index)
         return(search_for_treeB(treeA->L, index));
     
     return(treeA->key);
@@ -139,11 +137,11 @@ t_nodoA* search_for_treeA(t_nodoA* treeA, int index)
         return NULL;
     
     /* chave maior que nodo, procura na direita */
-    if (calc_index(treeA->key)<index)
+    if (index_treeB(treeA->key)<index)
         return (search_for_treeA(treeA->R, index));
 
     /* chave menor que nodo, procura da esquerda */
-    if(calc_index(treeA->key)>index)
+    if(index_treeB(treeA->key)>index)
         return(search_for_treeA(treeA->L, index));
     
     return(treeA);
@@ -265,12 +263,17 @@ void preordem_A(t_nodoA *no)
 {
     if (no != NULL)
     {
+        int aux;
+        aux = index_treeB(no->key);
+        if( aux == EMPTY )
+            aux = 0;
+
         printf("[");
         preordem_B(no->key);
-        printf("\n");
+        printf(" : %d\n", aux);
         preordem_A(no->L);
         preordem_A(no->R);
-        printf("]");
+        printf("]\n");
     }
 }
 
@@ -315,6 +318,8 @@ t_nodoB* cria_arvoreB(char* entrada)
             else
             {
                 nodo = cria_nodoB();
+                /* assing pai */
+                nodo->pai = atual;
                 /* se esquerda livre */    
                 if( atual->L == NULL )
                     atual->L = nodo;
@@ -345,6 +350,17 @@ t_nodoB* cria_arvoreB(char* entrada)
     return raiz;
 }
 
+void remove_treeB(t_nodoB* nodoB)
+{
+    /* remove arvore inteira */
+    if( nodoB != NULL )
+    {
+        remove_treeB(nodoB->L);
+        remove_treeB(nodoB->R);
+        free(nodoB);
+    }
+}
+
 t_nodoB* cria_nodoB(void)
 {
     t_nodoB* nodo;
@@ -352,7 +368,8 @@ t_nodoB* cria_nodoB(void)
     if (nodo==NULL)
         kill("erro ao alocar nodo",1);
     
-    nodo->chave = 0;
+    nodo->pai = NULL;
+    nodo->chave = EMPTY;
     nodo->L = NULL;
     nodo->R = NULL;
 
@@ -377,14 +394,16 @@ void preordem_B(t_nodoB *no)
 /* ===================== UTILS ===================== */
 
 
-int calc_index(t_nodoB* nodoB)
+int index_treeB(t_nodoB* nodoB)
 {
-    int index=0;
-    index+=nodoB->chave;
-    if(nodoB->L!=NULL)
-        index+=calc_index(nodoB->L);
-    if(nodoB->R!=NULL)
-        index+=calc_index(nodoB->R);
+    int index = 0;
+    index += nodoB->chave;
+
+    if(nodoB->L != NULL  )
+        index += index_treeB(nodoB->L);
+    if(nodoB->R != NULL )
+        index += index_treeB(nodoB->R);
+
     return index;     
 }
 
@@ -393,7 +412,7 @@ int index_strB(char* entrada)
 {
     int i=0;
     int aux = 0;
-    int index=0;
+    int index = 0;
     while(entrada[i] != '\0')
     {
         if ( entrada[i] != '(' && entrada[i] != ')')
@@ -410,7 +429,7 @@ int index_strB(char* entrada)
 void place_nodoB(t_nodoB *this, t_nodoB *folha)
 {
     /* salva anterior */
-    //folha->pai = this;
+    folha->pai = this;
     
     /* se esquerda livre */    
     if( this->L == NULL )
@@ -423,6 +442,65 @@ void place_nodoB(t_nodoB *this, t_nodoB *folha)
     /* se ambos ocupado */
     else 
         kill("nao foi possivel colocar folha", 2); 
+}
+
+void stream_input(char const *argv[], int argc, t_nodoA* raizA)
+{
+    FILE* input_stream;
+    char oper, inp[MAX_SZ];
+
+
+    /* redireciona entrada */
+    if( argc == 1)
+        input_stream = stdin;
+    else if( argc == 2 )
+    {
+        input_stream = fopen(argv[1], "r");
+
+        while(!feof(input_stream)){
+            // le operacao
+            fscanf(input_stream, "%s", inp);
+
+            oper = read_oper(inp);
+
+            // le string(arvore) a ser operada 
+            fscanf(input_stream, "%s\n", inp);
+    
+            opera(raizA, oper, inp);
+        }
+        // volta a ler da entrada
+        input_stream = stdin;
+        printf("\n");
+        preordem_A(raizA);
+        printf("\n");
+    }
+    else
+    {
+        printf("uso: ./busca (interacao manual)\n)");
+        printf("     ./busca entrada.txt (arquivo com operacoes automatizadas)\n");
+        kill("", 1);
+    }
+
+    /* interacao manual */
+    while(1)
+    {
+        // le operacao
+        fscanf(input_stream, "%s", inp);
+        if( stop(inp) )
+            break;
+
+        oper = read_oper(inp);
+
+        // le string(arvore) a ser operada 
+        fscanf(input_stream, "%s", inp);
+        if( stop(inp) )
+            break;
+            
+        opera(raizA, oper, inp);
+        printf("\n");
+        preordem_A(raizA);
+        printf("\n");
+    }
 }
 
 int my_atoi(char* c, int i, int *diff)
@@ -444,6 +522,9 @@ int my_atoi(char* c, int i, int *diff)
             n++;
         }
 
+        if(aux == EMPTY)
+            return 0;
+
         *diff = n - 1;
 
         // printf("aux: %d\n", aux); printf("diff: %d\n", *diff);
@@ -459,7 +540,12 @@ int my_atoi(char* c, int i, int *diff)
 
 int stop(char* c)
 {
-    return !strcmp(c, "0") || !strcmp(c, "");
+    if(!strcmp(c, "0") || !strcmp(c, ""))
+    {
+        fprintf(stderr, "end input operator \n");
+        return 1;
+    }
+    return 0;
 }
 void kill(char *msg, int signal)
 {
