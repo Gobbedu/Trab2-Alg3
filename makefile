@@ -28,3 +28,4 @@ main.o: $(CODED)
 
 clean:
 	rm *.o 
+	rm $(NAME)
