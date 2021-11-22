@@ -134,14 +134,8 @@ int exclui (t_nodoA *no)
     return 0;
 }
 
-
-
-
 t_nodoA* remove_treeA(t_nodoA* root, int key)
 {   
-    /* geeks for geeks tem explicacao massa */
-    /* https://www.geeksforgeeks.org/binary-search-tree-set-2-delete/?ref=lbp */
-
     t_nodoA* temp;
 
     // caso base
