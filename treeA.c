@@ -95,7 +95,7 @@ void ajustaNoPai(t_nodoA *nodo, t_nodoA *novo){
     }
 }
 
-t_nodoA *exclui (t_nodoA *nodo,t_nodoA *raiz) 
+t_nodoA *exclui (t_nodoA *nodo,t_nodoA *raiz,int excluiu) 
 {
     t_nodoA *s;
     t_nodoA *novaraiz=raiz;
@@ -106,6 +106,7 @@ t_nodoA *exclui (t_nodoA *nodo,t_nodoA *raiz)
         nodo->key=NULL;
         free (nodo);
         nodo=NULL;
+        excluiu=1;
     }
     else 
         if (nodo->R == NULL)
@@ -115,7 +116,7 @@ t_nodoA *exclui (t_nodoA *nodo,t_nodoA *raiz)
             nodo->key=NULL;
             free(nodo);
             nodo=NULL;
-            return 1;
+            excluiu=1;
         }
         else 
         {            
@@ -131,6 +132,7 @@ t_nodoA *exclui (t_nodoA *nodo,t_nodoA *raiz)
             nodo->key=NULL;
             free(nodo);
             nodo=NULL;
+            excluiu=1;
         }
     return novaraiz;
 }
