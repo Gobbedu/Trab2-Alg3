@@ -40,16 +40,19 @@ typedef struct t_nodoA
 /* ARVORE A */
 t_nodoA* search_tree(t_nodoA* nodoA, int index);
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB);
-t_nodoA* remove_treeA(t_nodoA* treeA, int index);
 t_nodoA* menorNodo(t_nodoA* nodo);
 
 void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
 void opera(t_nodoA* treeA, char oper, char* c);
-void reorganize_tree(t_nodoA* treeA);
 void preordem_A(t_nodoA* nodo);
 void free_treeA(t_nodoA* raiz);
 t_nodoA* A_init(void);
 char read_oper(char* c);
+
+t_nodoA *return_min(t_nodoA *no);
+t_nodoA *sucessor (t_nodoA *no);
+void ajustaNoPai(t_nodoA *no, t_nodoA *novo);
+int exclui (t_nodoA *no) ;
 
 /* ARVORE B */
 void remove_treeB(t_nodoB* nodo);
@@ -70,10 +73,6 @@ int stop(char* c);
 void kill(char *msg, int sig);
 
 
-t_nodoA *min(t_nodoA *no);
-t_nodoA *sucessor (t_nodoA *no);
-void ajustaNoPai(t_nodoA *no, t_nodoA *novo);
-int exclui (t_nodoA *no) ;
 
 
 
