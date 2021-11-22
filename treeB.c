@@ -1,7 +1,6 @@
 #include "tree.h"
 /* ==================== ARVORE --B-- ==================== */
 
-
 t_nodoB* cria_arvoreB(char* entrada)
 {
     int i, aux = 0;

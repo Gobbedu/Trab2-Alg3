@@ -24,12 +24,7 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
         {
             fprintf(stderr, "A árvore com o valor de indexação %d foi encontrada:\n",index_strB(str_treeB) );
             /*Mostrar o nodo achado*/
-            while( aux->pai != NULL )
-            {
-                preordem_B(aux->key);
-                printf(" : %d\n", index_treeB(aux->key));   
-                aux = aux->pai;
-            }
+            mostra_caminho(aux);
             printf("\n");
         }
         else    
@@ -49,6 +44,16 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
             printf("]\n\n");
         }
     }
+}
+
+void mostra_caminho(t_nodoA* nodo)
+{
+    if( nodo->pai == NULL )
+        return;
+
+    mostra_caminho(nodo->pai);
+    preordem_B(nodo->key);
+    printf(" : %d\n", index_treeB(nodo->key));
 }
 
 char read_oper(char* c)

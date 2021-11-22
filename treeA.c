@@ -190,4 +190,3 @@ void free_treeA(t_nodoA* nodoA)
         free(nodoA);
     }
 }
-

@@ -64,10 +64,9 @@ t_nodoB* cria_nodoB(void);
 void stream_input(char const *argv[], int argc, t_nodoA* raizA);
 
 int index_strB(char* c);
-int my_atoi(char* c, int i, int *diff);
 int index_treeB(t_nodoB* nodoB);
-
 int my_atoi(char* c, int i, int *diff);
+void mostra_caminho(t_nodoA* nodo);
 
 int stop(char* c);
 void kill(char *msg, int sig);
