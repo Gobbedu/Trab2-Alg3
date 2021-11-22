@@ -12,7 +12,7 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB)
     
         printf("\n[");
         preordem_A(treeA);
-        printf("]\n\n");
+        printf("]\n]\n\n");
     }
     else if( oper == 'b')
     {
@@ -23,26 +23,42 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB)
         {
             fprintf(stderr, "A árvore com o valor de indexação %d foi encontrada:\n",index_strB(str_treeB) );
             /*Mostrar o nodo achado*/
-            while( aux->pai != NULL )
-            {
-                preordem_B(aux->key);
-                aux = aux->pai;
-                printf("\n");   
-            }
+            mostra_caminho(aux);
+            printf("\n");
         }
         else    
+<<<<<<< HEAD
             fprintf(stderr, "A árvore com o valor de indexação %d nao foi encontrada\n",index_strB(str_treeB) );
+=======
+            fprintf(stderr, "A árvore com o valor de indexação %d nao foi encontrada\n\n",index_strB(str_treeB) );
+>>>>>>> e6eebeb7404c1da6cdc048e53f3cd83d00d0f134
     }
     else if( oper == 'r')
     {
         fprintf(stderr, "removing %s : %d\n", str_treeB, index_strB(str_treeB));
         if( !exclui(search_tree(treeA, index_strB(str_treeB))) )
+        {
             printf("nao foi possivel remover %s, chave %d nao existe\n", str_treeB, index_strB(str_treeB));
-
+        }
+        else{
             printf("\n[");
             preordem_A(treeA);
-            printf("]\n\n");
+            printf("]\n]\n\n");
+        }
     }
+}
+
+void mostra_caminho(t_nodoA* nodo)
+{
+    if( nodo->pai == NULL ){
+        preordem_B(nodo->key);
+        printf(" : %d\n", index_treeB(nodo->key));
+        return;
+    }
+
+    mostra_caminho(nodo->pai);
+    preordem_B(nodo->key);
+    printf(" : %d\n", index_treeB(nodo->key));
 }
 
 char read_oper(char* c)

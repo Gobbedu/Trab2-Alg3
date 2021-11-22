@@ -46,7 +46,7 @@ void opera(t_nodoA* treeA, char oper, char* c, int argc);
 void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
 void preordem_A(t_nodoA* nodo);
 void free_treeA(t_nodoA* raiz);
-t_nodoA* A_init(void);
+t_nodoA* A_init(t_nodoA* pai);
 char read_oper(char* c);
 
 t_nodoA *return_min(t_nodoA *no);
@@ -64,10 +64,9 @@ t_nodoB* cria_nodoB(void);
 void stream_input(char const *argv[], int argc, t_nodoA* raizA);
 
 int index_strB(char* c);
-int my_atoi(char* c, int i, int *diff);
 int index_treeB(t_nodoB* nodoB);
-
 int my_atoi(char* c, int i, int *diff);
+void mostra_caminho(t_nodoA* nodo);
 
 int stop(char* c);
 void kill(char *msg, int sig);
