@@ -49,7 +49,7 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
 void ajustaNoPai(t_nodoA *no, t_nodoA *novo);
 void preordem_A(t_nodoA* nodo);
 void free_treeA(t_nodoA* raiz);
-int exclui (t_nodoA *no) ;
+t_nodoA *exclui (t_nodoA *no,t_nodoA *raiz) ;
 char read_oper(char* c);
 
 /* ARVORE B */

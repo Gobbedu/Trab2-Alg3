@@ -1,13 +1,15 @@
 #include "tree.h"
 
 /* ===================== UTILS ===================== */
-void opera(t_nodoA *treeA, char oper, char* str_treeB)
+void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
 {
     t_nodoA* aux;
+    int excluiu=0;
     /* redireciona para funcao apropriada */
     if( oper == 'i')
     {
-        fprintf(stderr, "inserting %s : %d\n", str_treeB, index_strB(str_treeB));
+        if( argc == 2)
+            fprintf(stderr, "i %s : %d\n", str_treeB, index_strB(str_treeB));
         insert_tree(treeA, cria_arvoreB(str_treeB));
     
         printf("\n[");
@@ -31,8 +33,10 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB)
     }
     else if( oper == 'r')
     {
-        fprintf(stderr, "removing %s : %d\n", str_treeB, index_strB(str_treeB));
-        if( !exclui(search_tree(treeA, index_strB(str_treeB))) )
+        if( argc == 2)
+            fprintf(stderr, "r %s : %d\n", str_treeB, index_strB(str_treeB));
+        treeA=exclui(search_tree(treeA, index_strB(str_treeB))),treeA,excluiu);
+        if(!excluiu)
         {
             printf("nao foi possivel remover %s, chave %d nao existe\n", str_treeB, index_strB(str_treeB));
         }
@@ -42,6 +46,7 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB)
             printf("]\n]\n\n");
         }
     }
+
 }
 
 void mostra_caminho(t_nodoA* nodo)
