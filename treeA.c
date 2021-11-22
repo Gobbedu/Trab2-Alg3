@@ -63,138 +63,75 @@ t_nodoA* search_tree(t_nodoA* nodoA, int index)
     return(nodoA);
 }
 
-t_nodoA *min(t_nodoA *no){
-    if (no->L == NULL)
-        return no;
+t_nodoA *return_min(t_nodoA *nodo){
+    if (nodo->L == NULL)
+        return nodo;
     else
-        return min(no->L);
+        return return_min(nodo->L);
 }
 
-t_nodoA *sucessor (t_nodoA *no){
+t_nodoA *sucessor (t_nodoA *nodo){
     t_nodoA *s = NULL;
-    if (no->R != NULL) 
-        return min (no->R);
+    if (nodo->R != NULL) 
+        return return_min (nodo->R);
     else 
     {
-        s = no->pai;
-        while (s != NULL && no == s->R) {
-            no = s;
+        s = nodo->pai;
+        while (s != NULL && nodo == s->R) {
+            nodo = s;
             s = s->pai;
         }        
     }
     return s;
 }
 
-void ajustaNoPai(t_nodoA *no, t_nodoA *novo){
-    if (no->pai != NULL) {
-        if (no->pai->L == no)
-            no->pai->L = novo;
+void ajustaNoPai(t_nodoA *nodo, t_nodoA *novo){
+    if (nodo->pai != NULL) {
+        if (nodo->pai->L == nodo)
+            nodo->pai->L = novo;
         else
-            no->pai->R = novo;
+            nodo->pai->R = novo;
         if (novo != NULL)
-           novo->pai = no->pai;
+           novo->pai = nodo->pai;
     }
 }
 
-int exclui (t_nodoA *no) 
+int exclui (t_nodoA *nodo) 
 {
     t_nodoA *s;
-    if (no->L == NULL)
+    if (nodo->L == NULL)
     {
-        ajustaNoPai(no, no->R);
-        remove_treeB(no->key);
-        no->key=NULL;
-        free (no);
-        no=NULL;
+        ajustaNoPai(nodo, nodo->R);
+        remove_treeB(nodo->key);
+        nodo->key=NULL;
+        free (nodo);
+        nodo=NULL;
         return 1;
     } 
-    if (no->R == NULL)
+    if (nodo->R == NULL)
     {
-        ajustaNoPai(no, no->L);
-        remove_treeB(no->key);
-        no->key=NULL;
-        free(no);
-        no=NULL;
+        ajustaNoPai(nodo, nodo->L);
+        remove_treeB(nodo->key);
+        nodo->key=NULL;
+        free(nodo);
+        nodo=NULL;
         return 1;
     }
     else 
     {            
-        s = sucessor (no);
+        s = sucessor (nodo);
         ajustaNoPai(s, s->R);
-        s->L = no->L;
-        s->R = no->R;
-        no->L->pai=s;
-        ajustaNoPai(no, s);
-        remove_treeB(no->key);
-        no->key=NULL;
-        free(no);
-        no=NULL;
+        s->L = nodo->L;
+        s->R = nodo->R;
+        nodo->L->pai=s;
+        ajustaNoPai(nodo, s);
+        remove_treeB(nodo->key);
+        nodo->key=NULL;
+        free(nodo);
+        nodo=NULL;
         return 1;
     }
     return 0;
-}
-
-t_nodoA* remove_treeA(t_nodoA* root, int key)
-{   
-    t_nodoA* temp;
-
-    // caso base
-    if (root == NULL)
-        return root;
- 
-    // se chave a deletar for menor que chave da raiz a chave esta a esquerda
-    if (key < index_treeB(root->key) )
-        root->L = remove_treeA(root->L, key);
- 
-    // se chave a deletar for maior que chave da raiz a chave esta a direita
-    else if (key > index_treeB(root->key) )
-        root->R = remove_treeA(root->R, key);
- 
-    // achou a chave a deletar
-    else if( key == index_treeB(root->key) )
-    {
-        // nodo com uma folha
-        if (root->L == NULL && root->R != NULL) {
-            temp = root->R;
-            remove_treeB(root->key);
-            free(root);
-            return temp;
-        }
-        else if (root->R == NULL && root->L != NULL) {
-            temp = root->L;
-            remove_treeB(root->key);
-            free(root);
-            return temp;
-        }
- 
-        // nodo com duas folhas
-        else if( root->L != NULL && root->R != NULL)
-        {
-            // Get the inorder successor
-            // (smallest in the right subtree)
-            temp = menorNodo(root->R);
-    
-            // Copy the inorder
-            // successor's content to this node
-            root->key = temp->key;
-    
-            // Delete the inorder successor
-            root->R = remove_treeA(root->R, index_treeB(temp->key) );
-        }
-
-        // nodo eh folha
-        else if( root->L == NULL && root->R == NULL )
-        {
-            remove_treeB(root->key);
-            free(root);
-            root = NULL;
-        }
-    }
-    // nao achou a chave a deletar, retorna nada
-    else    
-        return NULL;
-
-    return root;
 }
 
 t_nodoA* menorNodo(t_nodoA* nodoA)
