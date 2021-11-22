@@ -27,11 +27,7 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB)
             printf("\n");
         }
         else    
-<<<<<<< HEAD
-            fprintf(stderr, "A árvore com o valor de indexação %d nao foi encontrada\n",index_strB(str_treeB) );
-=======
             fprintf(stderr, "A árvore com o valor de indexação %d nao foi encontrada\n\n",index_strB(str_treeB) );
->>>>>>> e6eebeb7404c1da6cdc048e53f3cd83d00d0f134
     }
     else if( oper == 'r')
     {
