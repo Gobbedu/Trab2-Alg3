@@ -13,7 +13,7 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
     
         printf("\n[");
         preordem_A(treeA);
-        printf("]\n\n");
+        printf("]\n]\n\n");
     }
     else if( oper == 'b')
     {
@@ -41,15 +41,18 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
         else{
             printf("\n[");
             preordem_A(treeA);
-            printf("]\n\n");
+            printf("]\n]\n\n");
         }
     }
 }
 
 void mostra_caminho(t_nodoA* nodo)
 {
-    if( nodo->pai == NULL )
+    if( nodo->pai == NULL ){
+        preordem_B(nodo->key);
+        printf(" : %d\n", index_treeB(nodo->key));
         return;
+    }
 
     mostra_caminho(nodo->pai);
     preordem_B(nodo->key);

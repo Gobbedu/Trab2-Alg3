@@ -3,7 +3,7 @@
 /* =================== ARVORE --A-- =================== */
 
 /* transforma input string em integer */
-t_nodoA* A_init(void)
+t_nodoA* A_init(t_nodoA* thisPai)
 {
     t_nodoB* auxB;
     auxB = malloc(sizeof(t_nodoB));
@@ -14,7 +14,7 @@ t_nodoA* A_init(void)
 
     t_nodoA* auxA;
     auxA = malloc(sizeof(t_nodoA));
-    auxA->pai = NULL;
+    auxA->pai = thisPai;
     auxA->L = NULL;
     auxA->R = NULL;
     auxA->key = auxB;
@@ -24,13 +24,13 @@ t_nodoA* A_init(void)
 void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
 {
     /* se nodo vazio */
-    if( treeA->key == NULL){
+    if( treeA->key->chave == EMPTY){
         treeA->key = nodoB;
     }
     /* se nodoB =< key --> L */
     else if( index_treeB(treeA->key) > index_treeB(nodoB) )
     {
-        if( treeA->L == NULL)
+        if( treeA->L == NULL )
             treeA->L = cria_nodoA(treeA, nodoB);
         else
             insert_tree(treeA->L, nodoB);
@@ -38,10 +38,9 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
     /* se nodoB >= key --> R */
     else if( index_treeB(treeA->key) < index_treeB(nodoB) )
     {
-        if( treeA->R == NULL)
+        if( treeA->R == NULL )
             treeA->R = cria_nodoA(treeA, nodoB);
-        
-        else 
+        else
             insert_tree(treeA->R, nodoB);
     }
 }
@@ -171,12 +170,19 @@ void preordem_A(t_nodoA *no)
                 printf("[");
                 preordem_B(no->key);
                 printf(" : %d\n", aux);
+            }
+            
+            if(no->R != NULL || no->L != NULL){
+                preordem_A(no->L);
+                printf("]\n");
+                preordem_A(no->R);
                 printf("]\n");
             }
-
-            preordem_A(no->L);
-            preordem_A(no->R);
         }
+    }
+    else
+    {
+        printf("[\n");
     }
 }
 

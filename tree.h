@@ -46,7 +46,7 @@ void opera(t_nodoA* treeA, char oper, char* c, int argc);
 void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
 void preordem_A(t_nodoA* nodo);
 void free_treeA(t_nodoA* raiz);
-t_nodoA* A_init(void);
+t_nodoA* A_init(t_nodoA* pai);
 char read_oper(char* c);
 
 t_nodoA *return_min(t_nodoA *no);
