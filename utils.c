@@ -27,23 +27,27 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
             while( aux->pai != NULL )
             {
                 preordem_B(aux->key);
+                printf(" : %d\n", index_treeB(aux->key));   
                 aux = aux->pai;
-                printf("\n");   
             }
+            printf("\n");
         }
         else    
-            fprintf(stderr, "A árvore com o valor de indexação %d nao foi encontrada:\n",index_strB(str_treeB) );
+            fprintf(stderr, "A árvore com o valor de indexação %d nao foi encontrada\n\n",index_strB(str_treeB) );
     }
     else if( oper == 'r')
     {
         if( argc == 2)
             fprintf(stderr, "r %s : %d\n", str_treeB, index_strB(str_treeB));
         if( !exclui(search_tree(treeA, index_strB(str_treeB))) )
+        {
             printf("nao foi possivel remover %s, chave %d nao existe\n", str_treeB, index_strB(str_treeB));
-
+        }
+        else{
             printf("\n[");
             preordem_A(treeA);
             printf("]\n\n");
+        }
     }
 }
 
