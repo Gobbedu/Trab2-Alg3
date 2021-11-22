@@ -160,7 +160,6 @@ void preordem_A(t_nodoA *no)
     if (no != NULL)
     {
         int aux;
-        printf("[");
         if ( no->key != NULL )
         {
             aux = index_treeB(no->key);
@@ -169,14 +168,15 @@ void preordem_A(t_nodoA *no)
 
             if( no->key != NULL && no->key->chave != EMPTY)
             {
+                printf("[");
                 preordem_B(no->key);
                 printf(" : %d\n", aux);
+                printf("]\n");
             }
 
             preordem_A(no->L);
             preordem_A(no->R);
         }
-        printf("]\n");
     }
 }
 

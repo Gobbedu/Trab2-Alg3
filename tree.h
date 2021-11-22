@@ -42,8 +42,8 @@ t_nodoA* search_tree(t_nodoA* nodoA, int index);
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB);
 t_nodoA* menorNodo(t_nodoA* nodo);
 
+void opera(t_nodoA* treeA, char oper, char* c, int argc);
 void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
-void opera(t_nodoA* treeA, char oper, char* c);
 void preordem_A(t_nodoA* nodo);
 void free_treeA(t_nodoA* raiz);
 t_nodoA* A_init(void);
