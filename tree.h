@@ -44,7 +44,7 @@ t_nodoA* remove_treeA(t_nodoA* treeA, int index);
 t_nodoA* menorNodo(t_nodoA* nodo);
 
 void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
-void opera(t_nodoA* treeA, char oper, char* c);
+void opera(t_nodoA* treeA, char oper, char* c, int argc);
 void reorganize_tree(t_nodoA* treeA);
 void preordem_A(t_nodoA* nodo);
 void free_treeA(t_nodoA* raiz);
