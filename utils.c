@@ -1,19 +1,17 @@
 #include "tree.h"
 
 /* ===================== UTILS ===================== */
-void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
+void opera(t_nodoA *treeA, char oper, char* str_treeB)
 {
     /* redireciona para funcao apropriada */
     if( oper == 'i')
     {
-        if( argc == 2)
-            fprintf(stderr, "i %s : %d\n", str_treeB, index_strB(str_treeB));
+        fprintf(stderr, "inserting %s : %d\n", str_treeB, index_strB(str_treeB));
         insert_tree(treeA, cria_arvoreB(str_treeB));
     }
     else if( oper == 'b')
     {
-        if( argc == 2)
-            fprintf(stderr, "b %s : %d\n", str_treeB, index_strB(str_treeB));
+        fprintf(stderr, "searching %s : %d\n", str_treeB, index_strB(str_treeB));
         search_tree(treeA, index_strB(str_treeB));
         fprintf(stderr, "A árvore com o valor de indexação %d foi encontrada:\n",index_strB(str_treeB) );
         /*Mostrar o nodo achado*/
@@ -21,8 +19,7 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
     }
     else if( oper == 'r')
     {
-        if( argc == 2)
-            fprintf(stderr, "r %s : %d\n", str_treeB, index_strB(str_treeB));
+        fprintf(stderr, "removing %s : %d\n", str_treeB, index_strB(str_treeB));
         if( !exclui(search_tree(treeA, index_strB(str_treeB))) )
             printf("nao foi possivel remover %s, chave %d nao existe\n", str_treeB, index_strB(str_treeB));
     }
@@ -121,29 +118,7 @@ void stream_input(char const *argv[], int argc, t_nodoA* raizA)
 
     /* redireciona entrada */
     if( argc == 1)
-    {
         input_stream = stdin;
-        /* interacao manual */
-        while(1)
-        {
-            // le operacao
-            fscanf(input_stream, "%s", inp);
-            if( stop(inp) )
-                break;
-
-            oper = read_oper(inp);
-
-            // le string(arvore) a ser operada 
-            fscanf(input_stream, "%s", inp);
-            if( stop(inp) )
-                break;
-                
-            opera(raizA, oper, inp, argc);
-            printf("\n[");
-            preordem_A(raizA);
-            printf("]\n\n");
-        }
-    }
     else if( argc == 2 )
     {
         input_stream = fopen(argv[1], "r");
@@ -157,15 +132,16 @@ void stream_input(char const *argv[], int argc, t_nodoA* raizA)
             // le string(arvore) a ser operada 
             fscanf(input_stream, "%s\n", inp);
     
-            opera(raizA, oper, inp, argc);
-
-            // volta a ler da entrada
-            printf("\n[");
-            preordem_A(raizA);
-            printf("]\n\n");
+            opera(raizA, oper, inp);
         }
+        // volta a ler da entrada
+        printf("\n");
+        if( raizA->key )
+        preordem_A(raizA);
+        printf("\n");
 
         fclose(input_stream);
+        input_stream = stdin;
     }
     else
     {
@@ -174,6 +150,26 @@ void stream_input(char const *argv[], int argc, t_nodoA* raizA)
         kill("", 1);
     }
 
+    /* interacao manual */
+    while(1)
+    {
+        // le operacao
+        fscanf(input_stream, "%s", inp);
+        if( stop(inp) )
+            break;
+
+        oper = read_oper(inp);
+
+        // le string(arvore) a ser operada 
+        fscanf(input_stream, "%s", inp);
+        if( stop(inp) )
+            break;
+            
+        opera(raizA, oper, inp);
+        printf("\n");
+        preordem_A(raizA);
+        printf("\n");
+    }
 }
 
 int my_atoi(char* c, int i, int *diff)
