@@ -40,6 +40,7 @@ typedef struct t_nodoA
 /* ARVORE A */
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB);
 t_nodoA* search_tree(t_nodoA* nodoA, int index);
+t_nodoA *exclui (t_nodoA *no,t_nodoA *raiz) ;
 t_nodoA *return_min(t_nodoA *no);
 t_nodoA *sucessor (t_nodoA *no);
 t_nodoA* A_init(t_nodoA* pai);
@@ -49,7 +50,7 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
 void ajustaNoPai(t_nodoA *no, t_nodoA *novo);
 void preordem_A(t_nodoA* nodo);
 void free_treeA(t_nodoA* raiz);
-t_nodoA *exclui (t_nodoA *no,t_nodoA *raiz,int excluiu) ;
+void free_nodoA(t_nodoA* nodo);
 char read_oper(char* c);
 
 /* ARVORE B */

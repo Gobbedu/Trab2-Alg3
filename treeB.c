@@ -60,6 +60,53 @@ t_nodoB* cria_arvoreB(char* entrada)
     return raiz;
 }
 
+/* calcula index arvore B com string */
+int index_strB(char* entrada)
+{
+    t_nodoB* auxB = cria_arvoreB(entrada);
+    int aux = index_treeB( auxB );
+    remove_treeB(auxB);
+    
+    return aux;
+}
+
+int index_treeB(t_nodoB* nodoB)
+{
+    int index = 0;
+    if(nodoB!=NULL)
+    {
+        if( nodoB->chave != EMPTY )
+            index += nodoB->chave;
+
+        if(nodoB->L != NULL  )
+            index += index_treeB(nodoB->L);
+        if(nodoB->R != NULL )
+            index += index_treeB(nodoB->R);
+    }
+
+    return index;     
+
+}
+
+void place_nodoB(t_nodoB *this, t_nodoB *folha)
+{
+    /* salva anterior */
+    folha->pai = this;
+    
+    /* se esquerda livre */    
+    if( this->L == NULL )
+        this->L = folha;
+    
+    /* se esquerda ocupada */
+    else if( this->L != NULL && this->R == NULL)
+        this->R = folha;
+
+    /* se ambos ocupado */
+    else 
+        kill("nao foi possivel colocar folha", 2); 
+}
+
+
 void remove_treeB(t_nodoB* nodoB)
 {
     /* remove arvore inteira */
@@ -75,14 +122,12 @@ t_nodoB* cria_nodoB(void)
 {
     t_nodoB* nodo;
     nodo = malloc(sizeof(t_nodoB));
-    if (nodo==NULL)
-        kill("erro ao alocar nodo",1);
+    if (nodo == NULL) kill("erro ao alocar nodo",1);
     
     nodo->pai = NULL;
     nodo->chave = EMPTY;
     nodo->L = NULL;
     nodo->R = NULL;
-
 
     return nodo;
 }

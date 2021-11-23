@@ -4,7 +4,7 @@
 void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
 {
     t_nodoA* aux;
-    int excluiu=0;
+
     /* redireciona para funcao apropriada */
     if( oper == 'i')
     {
@@ -33,10 +33,12 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
     }
     else if( oper == 'r')
     {
+        aux = search_tree(treeA, index_strB(str_treeB));
+        treeA = exclui(aux, treeA);
+
         if( argc == 2)
             fprintf(stderr, "r %s : %d\n", str_treeB, index_strB(str_treeB));
-        treeA=exclui(search_tree(treeA, index_strB(str_treeB))),treeA,excluiu);
-        if(!excluiu)
+        if( aux == NULL )
         {
             printf("nao foi possivel remover %s, chave %d nao existe\n", str_treeB, index_strB(str_treeB));
         }
@@ -91,62 +93,6 @@ char read_oper(char* c)
     return 0;
 }
 
-
-int index_treeB(t_nodoB* nodoB)
-{
-    int index = 0;
-    if(nodoB!=NULL)
-    {
-        if( nodoB->chave != EMPTY )
-            index += nodoB->chave;
-
-        if(nodoB->L != NULL  )
-            index += index_treeB(nodoB->L);
-        if(nodoB->R != NULL )
-            index += index_treeB(nodoB->R);
-    }
-
-    return index;     
-
-}
-
-/* calcula index arvore B com string */
-int index_strB(char* entrada)
-{
-    int i=0;
-    int aux = 0;
-    int index = 0;
-    while(entrada[i] != '\0')
-    {
-        if ( entrada[i] != '(' && entrada[i] != ')')
-        {
-            index += my_atoi(entrada, i, &aux);
-            i += aux;
-        }
-        i++;
-    }
-    return index;
-}
-
-
-void place_nodoB(t_nodoB *this, t_nodoB *folha)
-{
-    /* salva anterior */
-    folha->pai = this;
-    
-    /* se esquerda livre */    
-    if( this->L == NULL )
-        this->L = folha;
-    
-    /* se esquerda ocupada */
-    else if( this->L != NULL && this->R == NULL)
-        this->R = folha;
-
-    /* se ambos ocupado */
-    else 
-        kill("nao foi possivel colocar folha", 2); 
-}
-
 void stream_input(char const *argv[], int argc, t_nodoA* raizA)
 {
     FILE* input_stream;
@@ -154,7 +100,8 @@ void stream_input(char const *argv[], int argc, t_nodoA* raizA)
 
 
     /* redireciona entrada */
-    if( argc == 1)
+    if( argc == 1 )
+    {
         input_stream = stdin;
         /* interacao manual */
         while(1)
@@ -187,14 +134,11 @@ void stream_input(char const *argv[], int argc, t_nodoA* raizA)
             // le string(arvore) a ser operada 
             fscanf(input_stream, "%s\n", inp);
     
-            opera(raizA, oper, inp);
+            opera(raizA, oper, inp, argc);
         // volta a ler da entrada
-        if( raizA->key )
-        preordem_A(raizA);
-        printf("\n");
+        }
 
         fclose(input_stream);
-        input_stream = stdin;
     }
     else
     {
@@ -203,26 +147,6 @@ void stream_input(char const *argv[], int argc, t_nodoA* raizA)
         kill("", 1);
     }
 
-    /* interacao manual */
-    while(1)
-    {
-        // le operacao
-        fscanf(input_stream, "%s", inp);
-        if( stop(inp) )
-            break;
-
-        oper = read_oper(inp);
-
-        // le string(arvore) a ser operada 
-        fscanf(input_stream, "%s", inp);
-        if( stop(inp) )
-            break;
-            
-        opera(raizA, oper, inp);
-        printf("\n");
-        preordem_A(raizA);
-        printf("\n");
-    }
 }
 
 int my_atoi(char* c, int i, int *diff)
