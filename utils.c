@@ -1,10 +1,9 @@
 #include "tree.h"
 
 /* ===================== UTILS ===================== */
-void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
+t_nodoA *opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
 {
     t_nodoA* aux;
-
     /* redireciona para funcao apropriada */
     if( oper == 'i')
     {
@@ -34,7 +33,6 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
     else if( oper == 'r')
     {
         aux = search_tree(treeA, index_strB(str_treeB));
-        treeA = exclui(aux, treeA);
 
         if( argc == 2)
             fprintf(stderr, "r %s : %d\n", str_treeB, index_strB(str_treeB));
@@ -43,12 +41,13 @@ void opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
             printf("nao foi possivel remover %s, chave %d nao existe\n", str_treeB, index_strB(str_treeB));
         }
         else{
+            treeA = exclui(aux, treeA);
             printf("\n[");
             preordem_A(treeA);
             printf("]\n]\n\n");
         }
     }
-
+    return treeA;
 }
 
 void mostra_caminho(t_nodoA* nodo)
@@ -93,7 +92,7 @@ char read_oper(char* c)
     return 0;
 }
 
-void stream_input(char const *argv[], int argc, t_nodoA* raizA)
+t_nodoA *stream_input(char const *argv[], int argc, t_nodoA* raizA)
 {
     FILE* input_stream;
     char oper, inp[MAX_SZ];
@@ -118,7 +117,7 @@ void stream_input(char const *argv[], int argc, t_nodoA* raizA)
             if( stop(inp) )
                 break;
                 
-            opera(raizA, oper, inp, argc);
+            raizA=opera(raizA, oper, inp, argc);
         }
     }
     else if( argc == 2 )
@@ -134,7 +133,7 @@ void stream_input(char const *argv[], int argc, t_nodoA* raizA)
             // le string(arvore) a ser operada 
             fscanf(input_stream, "%s\n", inp);
     
-            opera(raizA, oper, inp, argc);
+            raizA=opera(raizA, oper, inp, argc);
         // volta a ler da entrada
         }
 
@@ -146,7 +145,7 @@ void stream_input(char const *argv[], int argc, t_nodoA* raizA)
         printf("     ./busca entrada.txt (arquivo com operacoes automatizadas)\n");
         kill("", 1);
     }
-
+    return raizA;
 }
 
 int my_atoi(char* c, int i, int *diff)

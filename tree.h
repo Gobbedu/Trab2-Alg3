@@ -45,7 +45,7 @@ t_nodoA *return_min(t_nodoA *no);
 t_nodoA *sucessor (t_nodoA *no);
 t_nodoA* A_init(t_nodoA* pai);
 
-void opera(t_nodoA* treeA, char oper, char* c, int argc);
+t_nodoA *opera(t_nodoA* treeA, char oper, char* c, int argc);
 void insert_tree(t_nodoA* treeA, t_nodoB* nooB);
 void ajustaNoPai(t_nodoA *no, t_nodoA *novo);
 void preordem_A(t_nodoA* nodo);
@@ -60,7 +60,7 @@ t_nodoB* cria_arvoreB(char* c);
 t_nodoB* cria_nodoB(void);
 
 /* UTILS */
-void stream_input(char const *argv[], int argc, t_nodoA* raizA);
+t_nodoA *stream_input(char const *argv[], int argc, t_nodoA* raizA);
 
 int index_strB(char* c);
 int index_treeB(t_nodoB* nodoB);

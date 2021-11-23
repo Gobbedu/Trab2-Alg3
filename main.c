@@ -5,7 +5,7 @@ int main(int argc, char const *argv[])
     t_nodoA* raizA;
     raizA = A_init(NULL);
 
-    stream_input(argv, argc, raizA);
+    raizA=stream_input(argv, argc, raizA);
 
     free_treeA(raizA);
 

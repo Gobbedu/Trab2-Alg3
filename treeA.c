@@ -13,15 +13,14 @@ t_nodoA* A_init(t_nodoA* thisPai)
     auxA->pai = thisPai;
     auxA->L = NULL;
     auxA->R = NULL;
-    auxA->key = cria_nodoB();
-    
+    auxA->key=NULL;
     return auxA;
 }
 
 void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
 {
     /* se nodo vazio */
-    if( treeA->key->chave == EMPTY){
+    if( !treeA->key){
         treeA->key = nodoB;
     }
     /* se nodoB < key --> L */
@@ -98,18 +97,25 @@ t_nodoA *exclui (t_nodoA *nodo,t_nodoA *raiz)
 {
     t_nodoA *s;
     t_nodoA *novaraiz = raiz;
-    if( !raiz )
-    {
 
         if (nodo->L == NULL)
         {
             ajustaNoPai(nodo, nodo->R);
+            if (nodo==raiz)
+            {
+                if(!nodo->R)
+                    novaraiz=NULL;
+                else
+                    novaraiz=nodo->R;
+            }
             free_nodoA(nodo);
         } 
         else {
             if (nodo->R == NULL)
             {
                 ajustaNoPai(nodo, nodo->L);
+                if (nodo==raiz)
+                    novaraiz=nodo->L;
                 free_nodoA(nodo);
             }
             else {            
@@ -119,16 +125,12 @@ t_nodoA *exclui (t_nodoA *nodo,t_nodoA *raiz)
                 s->R = nodo->R;
                 nodo->L->pai=s;
                 ajustaNoPai(nodo, s);
-                
                 if(nodo == raiz)
                     novaraiz=s;             
-                
                 free_nodoA(nodo);
             }
         }
         return novaraiz;
-    }
-    return raiz;
 }
 
 t_nodoA* menorNodo(t_nodoA* nodoA)

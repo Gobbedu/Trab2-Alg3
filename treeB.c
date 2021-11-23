@@ -6,16 +6,12 @@ t_nodoB* cria_arvoreB(char* entrada)
     int i, aux = 0;
     t_nodoB *raiz, *nodo, *atual;
 
-    // printf("criando %s\n", entrada);
 
     atual = NULL;
     raiz = NULL;
     i = 0;
     while(entrada[i] != '\0')
     {
-        /*
-        printf("lendo %c\n", entrada[i]);
-        */
         if (entrada[i] == '(')
         {
             /* se raiz nao existe ( primeiro nodo ) */
@@ -49,7 +45,6 @@ t_nodoB* cria_arvoreB(char* entrada)
     
         else if ( entrada[i] != '(' && entrada[i] != ')')
         {
-            // atual->chave = atoi(entrada[i]);
             atual->chave = my_atoi(entrada, i, &aux);
             i += aux;
         }
@@ -86,24 +81,6 @@ int index_treeB(t_nodoB* nodoB)
 
     return index;     
 
-}
-
-void place_nodoB(t_nodoB *this, t_nodoB *folha)
-{
-    /* salva anterior */
-    folha->pai = this;
-    
-    /* se esquerda livre */    
-    if( this->L == NULL )
-        this->L = folha;
-    
-    /* se esquerda ocupada */
-    else if( this->L != NULL && this->R == NULL)
-        this->R = folha;
-
-    /* se ambos ocupado */
-    else 
-        kill("nao foi possivel colocar folha", 2); 
 }
 
 
