@@ -2,6 +2,7 @@
 
 /* =================== ARVORE --A-- =================== */
 
+/* inicializa nodo A */
 t_nodoA* A_init(t_nodoA* thisPai)
 {
     /* nodo arvore A vazio com chave arvore B vazia */
@@ -17,6 +18,7 @@ t_nodoA* A_init(t_nodoA* thisPai)
     return auxA;
 }
 
+/* insere arvore B em arvore A */
 void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
 {
     /* se nodo vazio */
@@ -60,6 +62,7 @@ t_nodoA* search_tree(t_nodoA* nodoA, int index)
         return(nodoA);
 }
 
+/* retorna menor index a partir de nodo */
 t_nodoA *return_min(t_nodoA *nodo){
     if (nodo->L == NULL)
         return nodo;
@@ -67,6 +70,7 @@ t_nodoA *return_min(t_nodoA *nodo){
         return return_min(nodo->L);
 }
 
+/* retorna sucessor de nodo */
 t_nodoA *sucessor (t_nodoA *nodo){
     t_nodoA *s = NULL;
     if (nodo->R != NULL) 
@@ -82,6 +86,7 @@ t_nodoA *sucessor (t_nodoA *nodo){
     return s;
 }
 
+/* ajusta pai de nodo para remocao */
 void ajustaNoPai(t_nodoA *nodo, t_nodoA *novo){
     if (nodo->pai != NULL) {
         if (nodo->pai->L == nodo)
@@ -93,6 +98,7 @@ void ajustaNoPai(t_nodoA *nodo, t_nodoA *novo){
     }
 }
 
+/* exclui nodo A e ajusta arvore A*/
 t_nodoA *exclui (t_nodoA *nodo,t_nodoA *raiz) 
 {
     t_nodoA *s;
@@ -133,17 +139,6 @@ t_nodoA *exclui (t_nodoA *nodo,t_nodoA *raiz)
         return novaraiz;
 }
 
-t_nodoA* menorNodo(t_nodoA* nodoA)
-{
-    t_nodoA* atual;
-    atual = nodoA;
-
-    while(atual && atual->L != NULL)
-        atual = atual->L;
-
-    return atual;
-}
-
 t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB)
 {
     t_nodoA *aux = malloc(sizeof(t_nodoA));
@@ -154,6 +149,7 @@ t_nodoA* cria_nodoA(t_nodoA* nodoA, t_nodoB* nodoB)
     return aux;
 }
 
+/* imprive arvore A em pre ordem */
 void preordem_A(t_nodoA *no)
 {
     int aux;
@@ -186,12 +182,14 @@ void preordem_A(t_nodoA *no)
         printf("[\n");
 }
 
+/* libera nodo A */
 void free_nodoA(t_nodoA* nodoA)
 {
     remove_treeB(nodoA->key);
     free(nodoA);
 }
 
+/* libera arvore A */
 void free_treeA(t_nodoA* nodoA)
 {
     if( nodoA != NULL )

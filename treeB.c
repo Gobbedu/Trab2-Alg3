@@ -3,6 +3,7 @@
 
 t_nodoB* cria_arvoreB(char* entrada)
 {
+    /* cria arvore com string (nodos()()) */
     int i, aux = 0;
     t_nodoB *raiz, *nodo, *atual;
 
@@ -65,6 +66,7 @@ int index_strB(char* entrada)
     return aux;
 }
 
+/* calcula index arvore B com nodo B */
 int index_treeB(t_nodoB* nodoB)
 {
     int index = 0;
@@ -80,13 +82,11 @@ int index_treeB(t_nodoB* nodoB)
     }
 
     return index;     
-
 }
 
-
+/* remove arvore B inteira */
 void remove_treeB(t_nodoB* nodoB)
 {
-    /* remove arvore inteira */
     if( nodoB != NULL )
     {
         remove_treeB(nodoB->L);
@@ -109,6 +109,7 @@ t_nodoB* cria_nodoB(void)
     return nodo;
 }
 
+/* imprime arvore B em preordem */
 void preordem_B(t_nodoB *no)
 {    
     if (no != NULL)

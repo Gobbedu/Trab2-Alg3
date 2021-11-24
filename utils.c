@@ -7,6 +7,7 @@ t_nodoA *opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
     /* redireciona para funcao apropriada */
     if( oper == 'i')
     {
+        /* insere arvore */
         if( argc == 2)
             fprintf(stderr, "i %s : %d\n", str_treeB, index_strB(str_treeB));
         insert_tree(treeA, cria_arvoreB(str_treeB));
@@ -17,13 +18,14 @@ t_nodoA *opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
     }
     else if( oper == 'b')
     {
+        /* busca arvore */
         aux = search_tree(treeA, index_strB(str_treeB));
         if( argc == 2)
             fprintf(stderr, "b %s : %d\n", str_treeB, index_strB(str_treeB));
         if( aux )
         {
             fprintf(stderr, "A árvore com o valor de indexação %d foi encontrada:\n",index_strB(str_treeB) );
-            /*Mostrar o nodo achado*/
+            /*Mostra o nodo achado*/
             mostra_caminho(aux);
             printf("\n");
         }
@@ -32,6 +34,7 @@ t_nodoA *opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
     }
     else if( oper == 'r')
     {
+        /* remove arvore */
         aux = search_tree(treeA, index_strB(str_treeB));
 
         if( argc == 2)
@@ -52,6 +55,7 @@ t_nodoA *opera(t_nodoA *treeA, char oper, char* str_treeB, int argc)
 
 void mostra_caminho(t_nodoA* nodo)
 {
+    /* percorre a arvore da raiz ate nodo */
     if( nodo->pai == NULL ){
         preordem_B(nodo->key);
         printf(" : %d\n", index_treeB(nodo->key));
@@ -65,6 +69,7 @@ void mostra_caminho(t_nodoA* nodo)
 
 char read_oper(char* c)
 {
+    /* le operacao de entrada */
     switch (c[0])
     {
     case 'i':
@@ -102,48 +107,49 @@ t_nodoA *stream_input(char const *argv[], int argc, t_nodoA* raizA)
     if( argc == 1 )
     {
         input_stream = stdin;
-        /* interacao manual */
+        /* interacao manual para depuracao */
         while(1)
         {
-            // le operacao
+            /* le operacao */
             fscanf(input_stream, "%s", inp);
             if( stop(inp) )
                 break;
 
             oper = read_oper(inp);
 
-            // le string(arvore) a ser operada 
+            /* le string(arvore) a ser operada  */
             fscanf(input_stream, "%s", inp);
             if( stop(inp) )
                 break;
                 
-            raizA=opera(raizA, oper, inp, argc);
+            raizA = opera(raizA, oper, inp, argc);
         }
     }
     else if( argc == 2 )
     {
+        /* le entrada por arquivo */
         input_stream = fopen(argv[1], "r");
 
         while(!feof(input_stream)){
-            // le operacao
+            /* le operacao */
             fscanf(input_stream, "%s", inp);
 
             oper = read_oper(inp);
 
-            // le string(arvore) a ser operada 
+            /* le string(arvore) a ser operada  */
             fscanf(input_stream, "%s\n", inp);
     
             raizA=opera(raizA, oper, inp, argc);
-        // volta a ler da entrada
+        /* volta a ler da entrada */
         }
 
         fclose(input_stream);
     }
     else
     {
-        printf("uso: ./busca (interacao manual)\n)");
-        printf("     ./busca entrada.txt (arquivo com operacoes automatizadas)\n");
-        kill("", 1);
+        printf("uso: ./busca ( interacao manual para depuracao )\n)");
+        printf("     ./busca entrada.txt (arquivo com operacoes em texto)\n");
+        kill("uso invalido", 1);
     }
     return raizA;
 }
@@ -172,7 +178,7 @@ int my_atoi(char* c, int i, int *diff)
 
         *diff = n - 1;
 
-        // printf("aux: %d\n", aux); printf("diff: %d\n", *diff);
+        /* printf("aux: %d\n", aux); printf("diff: %d\n", *diff); */
 
         return aux;
     }
@@ -183,6 +189,7 @@ int my_atoi(char* c, int i, int *diff)
     return 0;
 }
 
+/* fim do programa em modo manual */
 int stop(char* c)
 {
     if(!strcmp(c, "0") || !strcmp(c, ""))
@@ -192,6 +199,8 @@ int stop(char* c)
     }
     return 0;
 }
+
+/* termina programa */
 void kill(char *msg, int signal)
 {
     fprintf(stderr, "%s\n", msg);
