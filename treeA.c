@@ -1,3 +1,13 @@
+/* =======================================================
+ *   Feito por 
+ *    Eduardo Gobbo Willi Vasconcellos Goncalves
+ *     &&
+ *    Dante Eleutério dos Santos
+ *   
+ *   GRR20206686
+ *   GRR20203892
+ *  ======================================================= */
+
 #include "tree.h"
 
 /* =================== ARVORE --A-- =================== */
