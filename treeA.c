@@ -1,8 +1,8 @@
 /* =======================================================
  *   Feito por 
- *    Eduardo Gobbo Willi Vasconcellos Goncalves
- *     &&
  *    Dante Eleutério dos Santos
+ *     &&
+ *    Eduardo Gobbo Willi Vasconcellos Goncalves
  *   
  *   GRR20206686
  *   GRR20203892
@@ -44,13 +44,16 @@ void insert_tree(t_nodoA* treeA, t_nodoB* nodoB)
             insert_tree(treeA->L, nodoB);
     }
     /* se nodoB >= key --> R */
-    else if( index_treeB(treeA->key) <= index_treeB(nodoB) )
+    else if( index_treeB(treeA->key) < index_treeB(nodoB) )
     {
         if( treeA->R == NULL )
             treeA->R = cria_nodoA(treeA, nodoB);
         else
             insert_tree(treeA->R, nodoB);
     }
+    /* se arvore ja existe nao inclui */
+    else
+        remove_treeB(nodoB);
 }
 
 t_nodoA* search_tree(t_nodoA* nodoA, int index)

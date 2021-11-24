@@ -1,8 +1,8 @@
 # =======================================================
 #   Feito por 
-#    Eduardo Gobbo Willi Vasconcellos Goncalves
-#     &&
 #    Dante Eleutério dos Santos
+#     &&
+#    Eduardo Gobbo Willi Vasconcellos Goncalves
 #   
 #   GRR20206686
 #   GRR20203892
@@ -28,4 +28,7 @@ main.o: $(CODED)
 
 clean:
 	rm *.o 
+
+purge: clean
 	rm $(NAME)
+
